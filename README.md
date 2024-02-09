@@ -29,7 +29,7 @@ Il faudra vérifier que ces programmes sont bien installés:
 
 - Télécharger le repo en local
 
-```git pull -u origin main```
+```git pull origin main```
 
 ### 3 - Installer les dépendaces
 
