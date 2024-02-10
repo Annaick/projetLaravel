@@ -30,9 +30,18 @@ Route::get("/", function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-//Route::get('/dashboard', function () {
-//    return Inertia::render('Dashboard');
-//})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/etudiant', function () {
+    return Inertia::render('Etudiant');
+})->middleware(['auth', 'verified'])->name('etudiant');
+
+Route::get('/professeur', function () {
+    return Inertia::render('Professeur');
+})->middleware(['auth', 'verified'])->name('professeur');
+
+Route::get('/organisme', function () {
+    return Inertia::render('Organisme');
+})->middleware(['auth', 'verified'])->name('organisme');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -22,20 +22,20 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">Information du profil</h2>
+                <h2 className="text-lg font-medium text-gray-200">Information du profil</h2>
 
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-gray-400">
                     Modifiez vos informations de profil et votre adresse email
                 </p>
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
                 <div>
-                    <InputLabel htmlFor="name" value="Nom" />
+                    <InputLabel htmlFor="name" value="Nom" className='text-gray-400'/>
 
                     <TextInput
                         id="name"
-                        className="mt-1 block w-full"
+                        className="mt-1 block border-none w-full text-white bg-gray-700"
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
                         required
@@ -52,7 +52,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     <TextInput
                         id="email"
                         type="email"
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full border-none"
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
                         required

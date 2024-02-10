@@ -39,9 +39,9 @@ export default function UpdatePasswordForm({ className = '' }) {
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">Modifier le mot de passe</h2>
+                <h2 className="text-lg font-medium text-gray-200">Modifier le mot de passe</h2>
 
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-gray-400">
                     Veuillez choisir un mot de passe long et difficile.
                 </p>
             </header>
@@ -56,7 +56,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                         value={data.current_password}
                         onChange={(e) => setData('current_password', e.target.value)}
                         type="password"
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full border-none w-full text-white bg-gray-700"
                         autoComplete="current-password"
                     />
 
@@ -72,7 +72,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                         value={data.password}
                         onChange={(e) => setData('password', e.target.value)}
                         type="password"
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full border-none w-full text-white"
                         autoComplete="new-password"
                     />
 

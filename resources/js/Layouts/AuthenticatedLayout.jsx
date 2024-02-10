@@ -5,6 +5,7 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import { Base } from './Layout';
+import { IconUser, IconBook, IconSchool, IconFileCertificate, IconHome, IconLogout } from '@tabler/icons-react';
 
 
 export default function Authenticated({ user, header, children }) {
@@ -12,11 +13,68 @@ export default function Authenticated({ user, header, children }) {
 
     return (
     <Base>
-        <div className="min-h-full bg-gray-100">
-            <nav className="bg-white border-b border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
-                        <div className="flex">
+        <div className="min-h-full grid grid-cols-[1.2fr_3fr] bg-transparent gap-2">
+            <nav className="bg-gray-800 rounded-xl py-8 flex flex-col">
+                <Link href="/" className='flex justify-center mb-8'>
+                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-400" />
+                </Link>
+                <Link href={route('profile.edit')} className='hover:bg-gray-700 py-4 flex items-center gap-2 px-4 text-gray-500 mb-4'>
+                    <IconUser></IconUser>
+                    <span>
+                        {user.name}
+                    </span>
+                </Link>
+                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                    <IconBook></IconBook>
+                    <span>
+                        Soutenir
+                    </span>
+                </NavLink>
+                <NavLink href={route('etudiant')} active={route().current('etudiant')}>
+                    <IconFileCertificate></IconFileCertificate>
+                    <span>
+                        Etudiant
+                    </span>
+                </NavLink>
+                <NavLink href={route('professeur')} active={route().current('professeur')}>
+                    <IconSchool></IconSchool>
+                    <span>
+                        Professeur
+                    </span>
+                </NavLink>
+                <NavLink href={route('organisme')} active={route().current('organisme')}>
+                    <IconHome></IconHome>
+                    <span>
+                        Organisme
+                    </span>
+                </NavLink>
+                <Link href={route('logout')} method='POST' as='button' className='hover:bg-gray-700 py-4 px-4 text-start text-gray-500 flex items-center gap-2 mt-auto'>
+                    <IconLogout></IconLogout>
+                    <span>
+                        Déconnecter
+                    </span>
+                </Link>
+            </nav>
+
+            {/*header && (
+                <header className="bg-white shadow">
+                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
+                </header>
+            )*/}
+
+            <main className='bg-gray-800 rounded-xl'>
+                {children}
+            </main>
+        </div>
+    </Base>
+    );
+}
+
+/*<div className="min-h-full grid grid-cols-[1fr_3fr] bg-transparent gap-2">
+            <nav className="bg-white border-b border-gray-100 rounded-xl py-8">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col">
+                    <div className="flex justify-between h-16 flex flex-col gap-4">
+                        <div className="flex flex-col items-center gap-4">
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
                                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
@@ -116,16 +174,13 @@ export default function Authenticated({ user, header, children }) {
                 </div>
             </nav>
 
-            {header && (
+            {/*header && (
                 <header className="bg-white shadow">
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
                 </header>
             )}
 
-            <main>
+            <main className='bg-white rounded-xl'>
                 {children}
             </main>
-        </div>
-    </Base>
-    );
-}
+        </div> */
