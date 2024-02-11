@@ -9,7 +9,7 @@ export default function NavLink({ active = false, className = '', children, ...p
                 'border-indigo-500 text-gray-900 focus:border-indigo-700 text-indigo-500 font-bold': active
             },
             {
-                'border-transparent text-gray-500 hover:text-gray-300 hover:border-gray-300 focus:text-gray-700 focus:border-gray-300 ': !active
+                'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-300 focus:text-gray-700 focus:border-gray-300 ': !active
             }) +className
         }
         >

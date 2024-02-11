@@ -5,7 +5,7 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import { Base } from './Layout';
-import { IconUser, IconBook, IconSchool, IconFileCertificate, IconHome, IconLogout } from '@tabler/icons-react';
+import { IconUser, IconBook, IconSchool, IconFileCertificate, IconHome, IconLogout, IconCube } from '@tabler/icons-react';
 
 
 export default function Authenticated({ user, header, children }) {
@@ -14,9 +14,9 @@ export default function Authenticated({ user, header, children }) {
     return (
     <Base>
         <div className="h-full grid grid-cols-[1.2fr_3fr] bg-transparent gap-2">
-            <nav className="bg-gray-800 rounded-xl py-8 flex flex-col max-h-full">
+            <nav className="bg-gray-800/90 backdrop-blur rounded-xl py-8 flex flex-col max-h-full">
                 <Link href="/" className='flex justify-center mb-8'>
-                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-400" />
+                    <IconCube className='text-gray-400' size={50}></IconCube>
                 </Link>
                 <NavLink active={route().current('profile.edit')} href={route('profile.edit')}>
                     <IconUser></IconUser>
@@ -62,7 +62,7 @@ export default function Authenticated({ user, header, children }) {
                 </header>
             )*/}
 
-            <main className='bg-gray-800 rounded-xl max-h-[95vh] overflow-scroll'>
+            <main className='bg-gray-800/90 backdrop-blur rounded-xl max-h-[95vh] overflow-scroll'>
                 {children}
             </main>
         </div>
