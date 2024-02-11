@@ -34,7 +34,7 @@ export default function Login({ status, canResetPassword }) {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="email" value="Adresse email" />
+                    <InputLabel className='text-gray-400' htmlFor="email" value="Adresse email" />
 
                     <TextInput
                         id="email"
@@ -73,7 +73,7 @@ export default function Login({ status, canResetPassword }) {
                             checked={data.remember}
                             onChange={(e) => setData('remember', e.target.checked)}
                         />
-                        <span className="ms-2 text-sm text-gray-600">Se souvenir de moi</span>
+                        <span className="ms-2 text-sm text-gray-400">Se souvenir de moi</span>
                     </label>
                 </div>
 
@@ -81,7 +81,7 @@ export default function Login({ status, canResetPassword }) {
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="underline text-sm text-gray-400 hover:text-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             Mot de passe oublié?
                         </Link>
