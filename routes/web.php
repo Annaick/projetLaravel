@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EtudianController;
+use App\Http\Controllers\OrganismeController;
+use App\Http\Controllers\ProfesseurController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,17 +33,11 @@ Route::get("/", function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::get('/etudiant', function () {
-    return Inertia::render('Etudiant');
-})->middleware(['auth', 'verified'])->name('etudiant');
+Route::get('/etudiant', [EtudianController::class, 'index'])->middleware(['auth', 'verified'])->name('etudiant');
 
-Route::get('/professeur', function () {
-    return Inertia::render('Professeur');
-})->middleware(['auth', 'verified'])->name('professeur');
+Route::get('/professeur', [ProfesseurController::class, 'index'])->middleware(['auth', 'verified'])->name('professeur');
 
-Route::get('/organisme', function () {
-    return Inertia::render('Organisme');
-})->middleware(['auth', 'verified'])->name('organisme');
+Route::get('/organisme', [OrganismeController::class, 'index'])->middleware(['auth', 'verified'])->name('organisme');
 
 
 Route::middleware('auth')->group(function () {
