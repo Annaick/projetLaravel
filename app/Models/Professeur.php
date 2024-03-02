@@ -10,6 +10,7 @@ class Professeur extends Model
     use HasFactory;
 
 protected $primaryKey = 'idprof';
+
     protected $fillable = [
         'idprof',
         'nom',
