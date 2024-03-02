@@ -20,4 +20,8 @@ class Etudiant extends Model
         'parcours',
         'adr_email'
     ];
+    public function soutenir()
+    {
+        return $this->hasOne(Soutenir::class, 'matricule');
+    }
 }

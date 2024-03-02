@@ -112,6 +112,13 @@ public function listerEtudiant()
         return response()->json(['etudiants_par_niveau' => $etudiantsParNiveau]);
     }
 
+//Liste des étudiants qui n’ont pas encore effectué de soutenance
+public function etudiantsSansSoutenance()
+{
+    $etudiantsSansSoutenance = Etudiant::whereDoesntHave('soutenir')->get();
+    return response()->json(['etudiants_sans_soutenance' => $etudiantsSansSoutenance]);
+}
+
 
 
 

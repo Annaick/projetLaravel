@@ -29,6 +29,7 @@ Route::post('/etudiants', [EtudiantController::class, 'ajouter']);
 Route::put('/etudiants/{id}', [EtudiantController::class, 'modifier']);
 Route::delete('/etudiants/{matricule}', [EtudiantController::class, 'supprimer']);
 Route::get('/etudiants/inscrits', [EtudiantController::class, 'listeInscritsParNiveau']);
+Route::get('/etudiants/sans-soutenance', [EtudiantController::class, 'etudiantsSansSoutenance']);
 
 Route::get('/etudiants', [EtudiantController::class, 'listerEtudiant']);
 
