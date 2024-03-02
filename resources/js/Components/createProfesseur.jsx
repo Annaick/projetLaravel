@@ -20,14 +20,43 @@ const grades = [
 ]
 
 
-export default function CreateProfesseur ({isOpen, onOpenChange}){
+export default function CreateProfesseur ({isOpen, onOpenChange, functionActualise}){
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
         if (isInvalid) toast.error('Veuillez remplir tous les champs');
         else{
-            //do stuff
-
+            try {
+                const url = 'http://127.0.0.1:8000/api/professeurs'; 
+                
+                const requestOptions = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nom,
+                        prenoms,
+                        civilite,
+                        grade,
+                    })
+                };
+                const response = await fetch(url, requestOptions);
+                if (response.ok) {
+                    toast.success('Professeur ajouté avec succès');
+                    // Réinitialisez les valeurs après l'ajout réussi si nécessaire
+                    setNom('');
+                    setPrenoms('');
+                    setCivilite('');
+                    setGrade('');
+                    // Fermez le modal
+                    functionActualise();
+                    onOpenChange();
+                } else {
+                    toast.error('Une erreur s\'est produite lors de l\'ajout du professeur');
+                }
+            } catch (error) {
+                console.error('Erreur lors de la requête API :', error);
+                toast.error('Une erreur s\'est produite lors de l\'ajout du professeur');
+            }
         }
     }
     

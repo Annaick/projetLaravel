@@ -20,7 +20,7 @@ const grades = [
 ]
 
 
-export default function ModifProfesseur ({isOpen, onOpenChange, id}){
+export default function ModifProfesseur ({isOpen, onOpenChange, id, functionActualise}){
 
     useEffect(()=>{
         fetchData()
@@ -53,8 +53,37 @@ export default function ModifProfesseur ({isOpen, onOpenChange, id}){
         e.preventDefault();
         if (isInvalid) toast.error('Veuillez remplir tous les champs');
         else{
-            //do stuff
-
+            try {
+                const url = `http://127.0.0.1:8000/api/professeurs/${id}`; 
+                
+                const requestOptions = {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nom,
+                        prenoms,
+                        grade,
+                        civilite
+                    })
+                };
+                const response = await fetch(url, requestOptions);
+                if (response.ok) {
+                    toast.success('Professeur modifié avec succès');
+                    // Réinitialisez les valeurs après l'ajout réussi si nécessaire
+                    setNom('');
+                    setPrenoms('');
+                    setCivilite('');
+                    setGrade('');
+                    // Fermez le modal
+                    functionActualise();
+                    onOpenChange();
+                } else {
+                    toast.error('Une erreur s\'est produite lors de la modification du professeur');
+                }
+            } catch (error) {
+                console.error('Erreur lors de la requête API :', error);
+                toast.error('Une erreur s\'est produite lors de la modification du professeur');
+            }
         }
     }
     

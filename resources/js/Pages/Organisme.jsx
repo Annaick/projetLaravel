@@ -55,11 +55,6 @@ export default function Organisme({ auth }) {
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
         >
-            <Toaster toastOptions={{
-            className: '!bg-gray-800 !text-gray-400',
-            style: {
-            }
-            }} />
             <header>
                 <div className="flex items-center mt-10 mb-4 px-4 gap-4">
                     <form action="" method="get" className="  gap-4 flex items-center w-full">

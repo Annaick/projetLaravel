@@ -7,6 +7,7 @@ import stc from 'string-to-color';
 import CreateProfesseur from '@/Components/createProfesseur';
 import Delete from '@/Components/ConfirmDelete';
 import ModifProfesseur from '@/Components/modifyProfesseur';
+import {toast, Toaster} from 'react-hot-toast';
 
 
 const getFirstLetter = name=> name[0];
@@ -16,6 +17,7 @@ export default function Professeurs({ auth }) {
     const [professeurs, setProfesseurs] = useState([])
     const [name, setName] = useState('')
     const [modifId, setModifId] = useState('')
+    const [idDelete, setIdDelete] = useState('')
 
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -32,6 +34,21 @@ export default function Professeurs({ auth }) {
         }catch(e){
             console.error(e)
         }
+    }
+
+
+    //Fonction qui supprime un professeur
+    const deleteProfesseur = async (id)=>{
+        try{
+            const url = `http://localhost:8000/api/professeurs/${id}`
+            const response = await fetch(url, {method: 'DELETE'})
+            if (response.ok){
+                toast.success ('Professeur supprimé avec succès')
+            }
+        }catch(e){
+            toast.error('Erreur lors de la suppression')
+        }
+        
     }
 
     useEffect(()=>{
@@ -86,7 +103,10 @@ export default function Professeurs({ auth }) {
                                                     onModifOpen()
                                                 }
                                             } isIconOnly variant='light' className="text-gray-500" aria-label='editer' type='button'><IconEdit /></Button>
-                                            <Button onClick={onDeleteOpen} isIconOnly variant='light' className="text-red-500" aria-label='supprimer' type='button'><IconTrash /></Button>
+                                            <Button onClick={()=>{
+                                                setIdDelete(professeur.idprof)
+                                                onDeleteOpen()
+                                            }} isIconOnly variant='light' className="text-red-500" aria-label='supprimer' type='button'><IconTrash /></Button>
                                     </div>
                                 </div>
                             </Card>
@@ -94,9 +114,9 @@ export default function Professeurs({ auth }) {
                     )
                 })}
             </ul>
-            <CreateProfesseur isOpen={isOpen} onOpenChange={onOpenChange} />
-            <Delete isOpen={isDeleteOpen} onOpenChange={onOpenDeleteChange} entity={"professeur"}/>
-            <ModifProfesseur isOpen={isModifOpen} onOpenChange={onOpenModifChange} id={modifId} />
+            <CreateProfesseur  functionActualise={getProfesseurs} isOpen={isOpen} onOpenChange={onOpenChange} />
+            <Delete deleteFunction={deleteProfesseur} idDelete={idDelete} functionActualise={getProfesseurs} isOpen={isDeleteOpen} onOpenChange={onOpenDeleteChange} entity={"professeur"}/>
+            <ModifProfesseur functionActualise={getProfesseurs} isOpen={isModifOpen} onOpenChange={onOpenModifChange} id={modifId} />
         </AuthenticatedLayout>
     );
 }
