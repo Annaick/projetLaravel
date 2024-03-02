@@ -24,6 +24,8 @@
         "@tabler/icons-react": "^2.47.0",
         "clsx": "^2.1.0",
         "framer-motion": "^11.0.3",
+        "react-hook-form": "^7.51.0",
+        "react-hot-toast": "^2.4.1",
         "string-to-color": "^2.2.2"
     }
 }

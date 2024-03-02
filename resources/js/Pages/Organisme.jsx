@@ -1,13 +1,16 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import {Card, Button} from '@nextui-org/react'
+import {Card, Button, useDisclosure} from '@nextui-org/react'
 import { IconSearch, IconTrash, IconEdit } from '@tabler/icons-react';
 import { useState, useEffect } from 'react';
+import CreateOrganisme from '@/Components/createOrganisme';
 
 export default function Organisme({ auth }) {
 
     const [organismes, setOrganismes] = useState([])
     const [lieu, setLieu] = useState('')
+
+
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
     const getOrganismes = async ()=>{
         try{
@@ -40,7 +43,7 @@ export default function Organisme({ auth }) {
                             value={lieu}
                             onChange={e=> {setLieu(e.target.value)}} />
                     </form>
-                    <Button className="bg-indigo-500 text-white">
+                    <Button onClick={onOpen} className="bg-indigo-500 text-white">
                        + Ajouter
                     </Button>
                 </div>
@@ -69,6 +72,7 @@ export default function Organisme({ auth }) {
                     )
                 })}
             </ul>
+            <CreateOrganisme isOpen={isOpen} onOpenChange={onOpenChange} />
         </AuthenticatedLayout>
     );
 }

@@ -1,17 +1,26 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import { Card, Avatar, Input, Button, Spinner } from '@nextui-org/react';
-import { IconSearch, IconTrash, IconEdit, IconPlus } from '@tabler/icons-react';
+import { Card, Avatar, Input, Button, ModalContent, Spinner, useDisclosure} from '@nextui-org/react';
+import { IconSearch, IconTrash, IconEdit} from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
+import CreateStudent from '@/Components/createStudent';
+
 import stc from 'string-to-color';
 
 const getFirstLetter = name=> name[0];
 
+
+
 export default function Etudiant({ auth }) {
 
+    //Stocke la liste des étudiants à afficher et les parametres de recherche
     const [etudiants, setEtudiants] = useState([])
     const [id, setId] = useState('');
     const [name, setName] = useState('')
+
+
+    //création étudiant
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+
 
     const getEtudiants = async ()=>{
         try{
@@ -53,7 +62,7 @@ export default function Etudiant({ auth }) {
                             value={name}
                             onChange={e=>{setName(e.target.value)}} />
                     </form>
-                    <Button className="bg-indigo-500 text-white">
+                    <Button className="bg-indigo-500 text-white" onClick={onOpen}>
                        + Ajouter
                     </Button>
                 </div>
@@ -61,7 +70,6 @@ export default function Etudiant({ auth }) {
             <ul aria-label="La liste des étudiants" className="p-4">
                 {Array.isArray(etudiants)? etudiants.map((etudiant, index)=>{
                     const color = stc(etudiant.prenoms + etudiant.nom);
-                    console.log(color);
                     return (
                         <li key={index}>
                             <Card className='dark bg-gray-900/65 mb-2'>
@@ -89,6 +97,7 @@ export default function Etudiant({ auth }) {
                     )
                 }) : <Spinner/>}
             </ul>
+            <CreateStudent isOpen={isOpen} onOpenChange={onOpenChange} />
         </AuthenticatedLayout>
     );
 }

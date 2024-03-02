@@ -1,9 +1,11 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import {Card, Avatar, Button} from '@nextui-org/react'
+import {Card, Avatar, Button, useDisclosure} from '@nextui-org/react'
 import { IconSearch,IconTrash, IconEdit } from '@tabler/icons-react';
 import { useState, useEffect } from 'react';
 import stc from 'string-to-color';
+import CreateProfesseur from '@/Components/createProfesseur';
+
 
 const getFirstLetter = name=> name[0];
 
@@ -12,6 +14,8 @@ export default function Professeurs({ auth }) {
     const [professeurs, setProfesseurs] = useState([])
     const [name, setName] = useState('')
 
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    
     const getProfesseurs = async ()=>{
         try{
             const url = `http://localhost:8000/api/professeur?name=${name}`;
@@ -42,7 +46,7 @@ export default function Professeurs({ auth }) {
                             value={name}
                             onChange={e=>{setName(e.target.value)}}/>
                     </form>
-                    <Button className="bg-indigo-500 text-white">
+                    <Button className="bg-indigo-500 text-white" onClick={onOpen}>
                        + Ajouter
                     </Button>
                 </div>
@@ -78,6 +82,7 @@ export default function Professeurs({ auth }) {
                     )
                 })}
             </ul>
+            <CreateProfesseur isOpen={isOpen} onOpenChange={onOpenChange} />
         </AuthenticatedLayout>
     );
 }
