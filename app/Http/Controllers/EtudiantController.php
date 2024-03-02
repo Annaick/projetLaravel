@@ -94,6 +94,24 @@ public function listerEtudiant()
     return response()->json($etudiant, 200);
 }
 
+//fonctionnalité affichage des listes 
+/**
+     * Affiche la liste des étudiants inscrits par niveau avec l'effectif total.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listeInscritsParNiveau()
+    {
+        // Récupérer la liste des étudiants inscrits par niveau avec l'effectif total
+        $etudiantsParNiveau = Etudiant::select('niveau', \DB::raw('count(*) as total'))
+                                    ->groupBy('niveau')
+                                    ->orderBy('niveau')
+                                    ->get();
+
+        // Retourner une réponse JSON avec la liste des étudiants par niveau et l'effectif total
+        return response()->json(['etudiants_par_niveau' => $etudiantsParNiveau]);
+    }
+
 
 
 
