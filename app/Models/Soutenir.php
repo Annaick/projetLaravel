@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Soutenir extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'id';
     protected $fillable = [
         'matricule',
         'idorg',

@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('soutenirs', function (Blueprint $table) {
+            $table->id(); 
             $table->string('matricule');
             $table->unsignedBigInteger('idorg');
             $table->string('annee_univ');
