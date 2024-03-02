@@ -9,6 +9,9 @@ class Etudiant extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'matricule';
+    public $incrementing = false;
+
     protected $fillable = [
         'matricule',
         'nom',

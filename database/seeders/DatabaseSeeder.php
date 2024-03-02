@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
              'email' => 'admin@gmail.com',
              'password' => '12345678'
         ]);
-
+        
         Etudiant::factory(30)->create();
         Professeur::factory(10)->create();
         Organisme::factory(10)->create();
