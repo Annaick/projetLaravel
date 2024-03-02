@@ -4,15 +4,19 @@ import { IconSearch, IconTrash, IconEdit } from '@tabler/icons-react';
 import { useState, useEffect } from 'react';
 import CreateOrganisme from '@/Components/createOrganisme';
 import Delete from '@/Components/ConfirmDelete';
+import ModifOrganisme from '@/Components/modifyOrganisme';
 
 export default function Organisme({ auth }) {
 
     const [organismes, setOrganismes] = useState([])
     const [lieu, setLieu] = useState('')
+    const [idModif, setIdModif] = useState('');
 
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const {isOpen: isDeleteOpen, onOpen: onDeleteOpen, onOpenChange: onOpenDeleteChange} = useDisclosure();
+    const {isOpen: isModifOpen, onOpen: onModifOpen, onOpenChange: onOpenModifChange} = useDisclosure();
+
 
     const getOrganismes = async ()=>{
         try{
@@ -65,7 +69,10 @@ export default function Organisme({ auth }) {
                         
                                     </div>
                                     <div className="flex ml-auto my-auto gap-2">
-                                                <Button isIconOnly variant='light' className="text-gray-500" aria-label='editer' type='button'><IconEdit /></Button>
+                                                <Button onClick={()=>{
+                                                    setIdModif(organisme.idorg)
+                                                    onModifOpen()
+                                                }} isIconOnly variant='light' className="text-gray-500" aria-label='editer' type='button'><IconEdit /></Button>
                                                 <Button onClick={onDeleteOpen} isIconOnly variant='light' className="text-red-500" aria-label='supprimer' type='button'><IconTrash /></Button>
                                     </div>
                                 </div>
@@ -76,6 +83,7 @@ export default function Organisme({ auth }) {
             </ul>
             <CreateOrganisme isOpen={isOpen} onOpenChange={onOpenChange} />
             <Delete isOpen={isDeleteOpen} onOpenChange={onOpenDeleteChange} entity={"organisme"} />
+            <ModifOrganisme isOpen={isModifOpen} onOpenChange={onOpenModifChange} id={idModif}  />
 
         </AuthenticatedLayout>
     );

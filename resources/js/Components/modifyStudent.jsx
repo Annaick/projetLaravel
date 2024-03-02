@@ -14,51 +14,55 @@ const parcoursList = [
 
 
 
-export default function CreateStudent ({isOpen, onOpenChange, functionActualise}){
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (isInvalid) {
-            toast.error('Veuillez remplir tous les champs');
-        } else {
-            try {
-                const url = 'http://127.0.0.1:8000/api/etudiants'; 
-                
-                const requestOptions = {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        matricule,
-                        nom,
-                        prenoms,
-                        adr_email: email,
-                        niveau,
-                        parcours
-                    })
-                };
-                const response = await fetch(url, requestOptions);
-                if (response.ok) {
-                    toast.success('Étudiant ajouté avec succès');
-                    // Réinitialisez les valeurs après l'ajout réussi si nécessaire
-                    setMatricule('');
-                    setNom('');
-                    setPrenoms('');
-                    setEmail('');
-                    setNiveau('');
-                    setParcours('');
-                    // Fermez le modal
-                    functionActualise();
-                    onOpenChange();
-                } else {
-                    toast.error('Une erreur s\'est produite lors de l\'ajout de l\'étudiant');
-                }
-            } catch (error) {
-                console.error('Erreur lors de la requête API :', error);
-                toast.error('Une erreur s\'est produite lors de l\'ajout de l\'étudiant');
-            }
-        }
-    };
+export default function ModifStudent ({isOpen, onOpenChange, id}){
+
+
+    useEffect(()=>{
+        fetchData()
+    }, [id])
     
+    const fetchData = async ()=>{
+        try{
+            const url = `http://localhost:8000/api/etudiant?id=${id}&name=`;
+            const data = await fetch (url).then (res => res.json());
+            const etudiant = data[0]
+
+            setEmail(etudiant.adr_email)
+            setMatricule(etudiant.matricule)
+            setNiveau(etudiant.niveau)
+            setParcours(etudiant.parcours)
+            setNom(etudiant.nom)
+            setPrenoms(etudiant.prenoms)
+            
+        }catch(e){
+            console.error(e)
+        }
+    }
+
+    const reset = ()=>{
+        setEmail('')
+        setMatricule('')
+        setNiveau('')
+        setParcours('')
+        setNom('')
+        setPrenoms('')
+    }
+    
+    const handleEdit = async (e)=>{
+        e.preventDefault();
+        if (isInvalid) toast.error('Veuillez remplir tous les champs');
+        else{
+            //try{
+            //    const url = `http://localhost:8000/api/etudiant?matricule=${matricule}&nom=${nom}&prenoms=${prenoms}&email=${email}$niveau=${niveau}$parcours=${parcours}`
+            //    await fetch(url, {method: 'POST'})
+            //    .then(rep => rep.text())
+            //    .then(data => console.log(data))
+            //}catch(e){
+            //    toast.error(e)
+            //}
+        }
+    }
     
     const [matricule, setMatricule] = useState('');
     const [nom, setNom] = useState('');
@@ -83,7 +87,7 @@ export default function CreateStudent ({isOpen, onOpenChange, functionActualise}
     }, [matricule, nom, prenoms, email, niveau, parcours])
 
     return (
-        <Modal className='dark ' isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Modal className='dark ' isOpen={isOpen} onOpenChange={onOpenChange} onClose={reset}>
         <Toaster toastOptions={{
             className: '!bg-gray-800 !text-gray-400',
             style: {
@@ -93,11 +97,11 @@ export default function CreateStudent ({isOpen, onOpenChange, functionActualise}
             {(onClose)=>(
                 <>
                     <ModalHeader className='flex flex-col gap-1 text-gray-400'>
-                        <h2>Nouvel(le) étudiant(e)</h2>
+                        <h2>Modifier étudiant</h2>
                         <span className='text-xs font-light'>Veuillez bien remplir tous les champs pour éviter toutes erreurs inutiles</span>
                     </ModalHeader>
                     <ModalBody>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleEdit}>
                             <Input 
                             isRequired 
                             type='number'
@@ -149,7 +153,8 @@ export default function CreateStudent ({isOpen, onOpenChange, functionActualise}
                             onChange={e=> setEmail(e.target.value)}
                             />
                             <div className='flex gap-4'>
-                                <Select
+                                <Select 
+                                selectedKeys={[niveau]}
                                 onChange={e=> setNiveau(e.target.value)}
                                 label="Niveaux" 
                                 placeholder='Sélectionner un niveau' 
@@ -167,7 +172,7 @@ export default function CreateStudent ({isOpen, onOpenChange, functionActualise}
                                         </SelectItem>
                                     ))}
                                 </Select>
-                                <Select label="Parcours" 
+                                <Select selectedKeys={[parcours]} label="Parcours" 
                                 placeholder='Sélectionner un parcours' 
                                 onChange={e=> setParcours(e.target.value)}
                                 classNames={{
@@ -186,8 +191,11 @@ export default function CreateStudent ({isOpen, onOpenChange, functionActualise}
                         </form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color='danger' variant='light' onClick={onClose}>Fermer</Button>
-                        <Button variant='solid' className='bg-indigo-600' onClick={handleSubmit}>Ajouter</Button>
+                        <Button color='danger' variant='light' onClick={()=>{
+                            reset()
+                            onClose()
+                        }}>Fermer</Button>
+                        <Button variant='solid' className='bg-indigo-600' onClick={handleEdit}>Modifier</Button>
                         
                     </ModalFooter>
                 </>

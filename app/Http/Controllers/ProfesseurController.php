@@ -14,9 +14,14 @@ class ProfesseurController extends Controller
     //Get list of all professors
     public function index(Request $request){
         $name = $request->input('name');
+        $id = $request->input('id');
         $query = Professeur::query();
         if ($name){
             $query->where('nom', 'like', '%'.$name.'%')->orWhere('prenoms', 'like', '%'.$name.'%');
+        }
+
+        if ($id){
+            $query->where('idprof', $id);
         }
 
         $professeurs = $query->get();

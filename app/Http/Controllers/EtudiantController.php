@@ -38,35 +38,7 @@ class EtudiantController extends Controller
     }
 
 
-    // Add new student
-    public function add (Request $request){
-        $matricule = $request->input('matricule');
-        $nom = $request->input('nom');
-        $prenoms = $request->input('prenoms');
-        $email = $request->input('email');
-        $niveau = $request->input('niveau');
-        $parcours = $request->input('parcours');
 
-        return 'reussi';
-
-        //if ($matricule !== "" || $nom !== "" || $prenoms !== "" || $email !== "" || $niveau !== "" || $parcours !== ""){
-        //    if (DB::table('etudiants')->where('matricule', $matricule)->exists()){
-        //        return new Error('L\'étudiant avec le numéro matricule '.$matricule.' existe déjà');
-        //    }else{
-        //        if (DB::table('etudiants')->insert([
-        //            'matricule' => $matricule,
-        //            'nom' => $nom,
-        //            'prenoms' => $prenoms,
-        //            'adr_email' => $email,
-        //            'parcours' => $parcours,
-        //            'niveau' => $niveau,
-        //        ])) return 'Ajout réussi';
-        //        return new Error('Erreur lors du processus, veuillez réssayer');
-        //    }
-        //}else{
-        //    return new Error("Error");
-        //}
-    }
 
 //ajout
     public function ajouter(Request $request)
