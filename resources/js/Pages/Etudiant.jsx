@@ -4,6 +4,7 @@ import { IconSearch, IconTrash, IconEdit} from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import CreateStudent from '@/Components/createStudent';
 import Delete from '@/Components/ConfirmDelete';
+import ModifStudent from '@/Components/modifyStudent';
 
 import stc from 'string-to-color';
 
@@ -16,22 +17,22 @@ export default function Etudiant({ auth }) {
     //Stocke la liste des étudiants à afficher et les parametres de recherche
     const [etudiants, setEtudiants] = useState([])
     const [id, setId] = useState('');
-    const [name, setName] = useState('')
+    const [idModif, setIdModif] = useState('');
+    const [name, setName] = useState('');
 
 
     //création étudiant
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
-
     const {isOpen: isDeleteOpen, onOpen: onDeleteOpen, onOpenChange: onOpenDeleteChange} = useDisclosure();
-
+    const {isOpen: isModifOpen, onOpen: onModifOpen, onOpenChange: onOpenModifChange} = useDisclosure();
 
     const getEtudiants = async ()=>{
         try{
 
             const url = `http://localhost:8000/api/etudiant?id=${id}&name=${name}`;
             const etudiants = await fetch (url).then (res => res.json());
-            console.log (etudiants);
-            setEtudiants(etudiants);
+            setEtudiants(etudiants)
+            
         }catch(e){
             console.error(e)
         }
@@ -91,7 +92,10 @@ export default function Etudiant({ auth }) {
                                         <p className="text-gray-400 text-sm">Parcours: {etudiant.parcours} </p>
                                     </div>
                                     <div className="flex ml-auto my-auto gap-2">
-                                        <Button isIconOnly variant='light' className="text-gray-500" aria-label='editer' type='button'><IconEdit /></Button>
+                                        <Button onClick={()=>{
+                                            setIdModif(etudiant.matricule);
+                                            onModifOpen();
+                                        }} isIconOnly variant='light' className="text-gray-500" aria-label='editer' type='button'><IconEdit /></Button>
                                         <Button onClick={onDeleteOpen} isIconOnly variant='light' className="text-red-500" aria-label='supprimer' type='button'><IconTrash /></Button>
                                     </div>
                                 </div>
@@ -102,6 +106,7 @@ export default function Etudiant({ auth }) {
             </ul>
             <CreateStudent isOpen={isOpen} onOpenChange={onOpenChange} />
             <Delete isOpen={isDeleteOpen} onOpenChange={onOpenDeleteChange} entity={"etudiant"} />
+            <ModifStudent isOpen={isModifOpen} onOpenChange={onOpenModifChange} id={idModif} />
         </AuthenticatedLayout>
     );
 }

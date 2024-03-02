@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import stc from 'string-to-color';
 import CreateProfesseur from '@/Components/createProfesseur';
 import Delete from '@/Components/ConfirmDelete';
+import ModifProfesseur from '@/Components/modifyProfesseur';
 
 
 const getFirstLetter = name=> name[0];
@@ -14,9 +15,13 @@ export default function Professeurs({ auth }) {
 
     const [professeurs, setProfesseurs] = useState([])
     const [name, setName] = useState('')
+    const [modifId, setModifId] = useState('')
+
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const {isOpen: isDeleteOpen, onOpen: onDeleteOpen, onOpenChange: onOpenDeleteChange} = useDisclosure();
+    const {isOpen: isModifOpen, onOpen: onModifOpen, onOpenChange: onOpenModifChange} = useDisclosure();
+
 
     const getProfesseurs = async ()=>{
         try{
@@ -75,7 +80,12 @@ export default function Professeurs({ auth }) {
                         
                                     </div>
                                     <div className="flex ml-auto my-auto gap-2">
-                                            <Button isIconOnly variant='light' className="text-gray-500" aria-label='editer' type='button'><IconEdit /></Button>
+                                            <Button onClick={
+                                                ()=>{
+                                                    setModifId(professeur.idprof)
+                                                    onModifOpen()
+                                                }
+                                            } isIconOnly variant='light' className="text-gray-500" aria-label='editer' type='button'><IconEdit /></Button>
                                             <Button onClick={onDeleteOpen} isIconOnly variant='light' className="text-red-500" aria-label='supprimer' type='button'><IconTrash /></Button>
                                     </div>
                                 </div>
@@ -86,6 +96,7 @@ export default function Professeurs({ auth }) {
             </ul>
             <CreateProfesseur isOpen={isOpen} onOpenChange={onOpenChange} />
             <Delete isOpen={isDeleteOpen} onOpenChange={onOpenDeleteChange} entity={"professeur"}/>
+            <ModifProfesseur isOpen={isModifOpen} onOpenChange={onOpenModifChange} id={modifId} />
         </AuthenticatedLayout>
     );
 }

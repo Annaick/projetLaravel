@@ -20,9 +20,36 @@ const grades = [
 ]
 
 
-export default function CreateProfesseur ({isOpen, onOpenChange}){
+export default function ModifProfesseur ({isOpen, onOpenChange, id}){
 
-    const handleSubmit = async (e)=>{
+    useEffect(()=>{
+        fetchData()
+    }, [id])
+    
+    const fetchData = async ()=>{
+        try{
+            const url = `http://localhost:8000/api/professeur?id=${id}`;
+            const data = await fetch (url).then (res => res.json());
+            const professeur = data[0]
+            
+            setCivilite(professeur.civilite)
+            setGrade(professeur.grade)
+            setNom(professeur.nom)
+            setPrenoms(professeur.prenoms)
+            
+        }catch(e){
+            console.error(e)
+        }
+    }
+
+    const reset = ()=>{
+        setCivilite('')
+        setGrade('')
+        setNom('')
+        setPrenoms('')
+    }
+
+    const handleEdit = async (e)=>{
         e.preventDefault();
         if (isInvalid) toast.error('Veuillez remplir tous les champs');
         else{
@@ -50,7 +77,7 @@ export default function CreateProfesseur ({isOpen, onOpenChange}){
     }, [nom, prenoms, civilite, grade])
 
     return (
-        <Modal className='dark ' isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Modal className='dark ' isOpen={isOpen} onOpenChange={onOpenChange} onClose={reset}>
         <Toaster toastOptions={{
             className: '!bg-gray-800 !text-gray-400',
             style: {
@@ -60,11 +87,11 @@ export default function CreateProfesseur ({isOpen, onOpenChange}){
             {(onClose)=>(
                 <>
                     <ModalHeader className='flex flex-col gap-1 text-gray-400'>
-                        <h2>Nouveau professeur</h2>
+                        <h2>Modifier professeur</h2>
                         <span className='text-xs font-light'>Veuillez bien remplir tous les champs pour éviter toutes erreurs inutiles</span>
                     </ModalHeader>
                     <ModalBody>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleEdit}>
                             <Input 
                             isRequired 
                             type='text'
@@ -100,6 +127,7 @@ export default function CreateProfesseur ({isOpen, onOpenChange}){
                                 popoverContent: 'bg-gray-800',
                                 trigger: 'bg-gray-800 !hover:bg-gray-700 data-[hover=true]:bg-gray-700'
                             }}
+                            selectedKeys={[civilite]}
                             isRequired>
                                 {civilites.map(civilite=>(
                                     <SelectItem key={civilite.value} value={civilite.value}>
@@ -109,6 +137,7 @@ export default function CreateProfesseur ({isOpen, onOpenChange}){
                             </Select>
                             <Select label="Grade" 
                             className="mt-4"
+                            selectedKeys={[grade]}
                             placeholder='Sélectionner un grade' 
                             onChange={e=> setGrade(e.target.value)}
                             classNames={{
@@ -127,7 +156,7 @@ export default function CreateProfesseur ({isOpen, onOpenChange}){
                     </ModalBody>
                     <ModalFooter>
                         <Button color='danger' variant='light' onClick={onClose}>Fermer</Button>
-                        <Button variant='solid' className='bg-indigo-600' onClick={handleSubmit}>Ajouter</Button>
+                        <Button variant='solid' className='bg-indigo-600' onClick={handleEdit}>Modifier</Button>
                         
                     </ModalFooter>
                 </>
