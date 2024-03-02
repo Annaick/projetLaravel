@@ -3,6 +3,7 @@ import { Card, Avatar, Input, Button, ModalContent, Spinner, useDisclosure} from
 import { IconSearch, IconTrash, IconEdit} from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import CreateStudent from '@/Components/createStudent';
+import Delete from '@/Components/ConfirmDelete';
 
 import stc from 'string-to-color';
 
@@ -20,6 +21,8 @@ export default function Etudiant({ auth }) {
 
     //création étudiant
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
+
+    const {isOpen: isDeleteOpen, onOpen: onDeleteOpen, onOpenChange: onOpenDeleteChange} = useDisclosure();
 
 
     const getEtudiants = async ()=>{
@@ -89,7 +92,7 @@ export default function Etudiant({ auth }) {
                                     </div>
                                     <div className="flex ml-auto my-auto gap-2">
                                         <Button isIconOnly variant='light' className="text-gray-500" aria-label='editer' type='button'><IconEdit /></Button>
-                                        <Button isIconOnly variant='light' className="text-red-500" aria-label='supprimer' type='button'><IconTrash /></Button>
+                                        <Button onClick={onDeleteOpen} isIconOnly variant='light' className="text-red-500" aria-label='supprimer' type='button'><IconTrash /></Button>
                                     </div>
                                 </div>
                             </Card>
@@ -98,6 +101,7 @@ export default function Etudiant({ auth }) {
                 }) : <Spinner/>}
             </ul>
             <CreateStudent isOpen={isOpen} onOpenChange={onOpenChange} />
+            <Delete isOpen={isDeleteOpen} onOpenChange={onOpenDeleteChange} entity={"etudiant"} />
         </AuthenticatedLayout>
     );
 }

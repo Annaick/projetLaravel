@@ -5,6 +5,7 @@ import { IconSearch,IconTrash, IconEdit } from '@tabler/icons-react';
 import { useState, useEffect } from 'react';
 import stc from 'string-to-color';
 import CreateProfesseur from '@/Components/createProfesseur';
+import Delete from '@/Components/ConfirmDelete';
 
 
 const getFirstLetter = name=> name[0];
@@ -15,7 +16,8 @@ export default function Professeurs({ auth }) {
     const [name, setName] = useState('')
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
-    
+    const {isOpen: isDeleteOpen, onOpen: onDeleteOpen, onOpenChange: onOpenDeleteChange} = useDisclosure();
+
     const getProfesseurs = async ()=>{
         try{
             const url = `http://localhost:8000/api/professeur?name=${name}`;
@@ -74,7 +76,7 @@ export default function Professeurs({ auth }) {
                                     </div>
                                     <div className="flex ml-auto my-auto gap-2">
                                             <Button isIconOnly variant='light' className="text-gray-500" aria-label='editer' type='button'><IconEdit /></Button>
-                                            <Button isIconOnly variant='light' className="text-red-500" aria-label='supprimer' type='button'><IconTrash /></Button>
+                                            <Button onClick={onDeleteOpen} isIconOnly variant='light' className="text-red-500" aria-label='supprimer' type='button'><IconTrash /></Button>
                                     </div>
                                 </div>
                             </Card>
@@ -83,6 +85,7 @@ export default function Professeurs({ auth }) {
                 })}
             </ul>
             <CreateProfesseur isOpen={isOpen} onOpenChange={onOpenChange} />
+            <Delete isOpen={isDeleteOpen} onOpenChange={onOpenDeleteChange} entity={"professeur"}/>
         </AuthenticatedLayout>
     );
 }

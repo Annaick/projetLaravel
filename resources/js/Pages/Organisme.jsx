@@ -3,6 +3,7 @@ import {Card, Button, useDisclosure} from '@nextui-org/react'
 import { IconSearch, IconTrash, IconEdit } from '@tabler/icons-react';
 import { useState, useEffect } from 'react';
 import CreateOrganisme from '@/Components/createOrganisme';
+import Delete from '@/Components/ConfirmDelete';
 
 export default function Organisme({ auth }) {
 
@@ -11,6 +12,7 @@ export default function Organisme({ auth }) {
 
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const {isOpen: isDeleteOpen, onOpen: onDeleteOpen, onOpenChange: onOpenDeleteChange} = useDisclosure();
 
     const getOrganismes = async ()=>{
         try{
@@ -64,7 +66,7 @@ export default function Organisme({ auth }) {
                                     </div>
                                     <div className="flex ml-auto my-auto gap-2">
                                                 <Button isIconOnly variant='light' className="text-gray-500" aria-label='editer' type='button'><IconEdit /></Button>
-                                                <Button isIconOnly variant='light' className="text-red-500" aria-label='supprimer' type='button'><IconTrash /></Button>
+                                                <Button onClick={onDeleteOpen} isIconOnly variant='light' className="text-red-500" aria-label='supprimer' type='button'><IconTrash /></Button>
                                     </div>
                                 </div>
                             </Card>
@@ -73,6 +75,8 @@ export default function Organisme({ auth }) {
                 })}
             </ul>
             <CreateOrganisme isOpen={isOpen} onOpenChange={onOpenChange} />
+            <Delete isOpen={isDeleteOpen} onOpenChange={onOpenDeleteChange} entity={"organisme"} />
+
         </AuthenticatedLayout>
     );
 }
