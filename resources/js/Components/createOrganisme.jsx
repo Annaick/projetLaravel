@@ -9,13 +9,37 @@ import { Toaster, toast } from "react-hot-toast";
 
 
 
-export default function CreateOrganisme ({isOpen, onOpenChange}){
+export default function CreateOrganisme ({isOpen, onOpenChange, functionActualise}){
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
         if (isInvalid) toast.error('Veuillez remplir tous les champs');
         else{
-            //do stuff
+            try {
+                const url = 'http://127.0.0.1:8000/api/organismes'; 
+                
+                const requestOptions = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        lieu,
+                        design
+                    })
+                };
+                const response = await fetch(url, requestOptions);
+                if (response.ok) {
+                    toast.success('Organisme ajouté avec succès');
+                    // Réinitialisez les valeurs après l'ajout réussi si nécessaire
+                    setLieu('');
+                    setDesign('');
+                    // Fermez le modal
+                    functionActualise();
+                    onOpenChange();
+                }
+            } catch (error) {
+                console.error('Erreur lors de la requête API :', error);
+                toast.error('Une erreur s\'est produite lors de l\'ajout de l\'organisme');
+            }
         }
     }
     

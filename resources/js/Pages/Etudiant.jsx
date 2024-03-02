@@ -126,7 +126,7 @@ export default function Etudiant({ auth }) {
             </ul>
             <CreateStudent isOpen={isOpen} functionActualise={getEtudiants} onOpenChange={onOpenChange} />
             <Delete isOpen={isDeleteOpen} functionActualise={getEtudiants} onOpenChange={onOpenDeleteChange} entity={"etudiant"} deleteFunction={deleteEtudiant} idDelete={idDelete} />
-            <ModifStudent isOpen={isModifOpen} onOpenChange={onOpenModifChange} id={idModif} />
+            <ModifStudent functionActualise={getEtudiants} isOpen={isModifOpen} onOpenChange={onOpenModifChange} id={idModif} />
         </AuthenticatedLayout>
     );
 }

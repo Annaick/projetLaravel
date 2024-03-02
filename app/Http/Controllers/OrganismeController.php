@@ -42,7 +42,7 @@ class OrganismeController extends Controller
             return response()->json(['message' => 'Le numéro de idorg existe déjà'], 400);
         } else {
             $organisme = new Organisme();
-            $organisme-> idorg = $request->input('idorg');
+            //$organisme-> idorg = $request->input('idorg'); Organisme est en autoincrement
             $organisme->design = $request->input('design');
             $organisme->lieu = $request->input('lieu');
             $organisme->save();
