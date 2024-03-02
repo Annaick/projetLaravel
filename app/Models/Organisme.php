@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Organisme extends Model
 {
     use HasFactory;
-
+    protected $primaryKey = 'idorg';
     protected $fillable = [
         'idorg',
         'design',

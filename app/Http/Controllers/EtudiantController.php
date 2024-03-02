@@ -68,7 +68,7 @@ class EtudiantController extends Controller
         //}
     }
 
-
+//ajout
     public function ajouter(Request $request)
 {
     $existingEtudiant = Etudiant::where('matricule', $request->input('matricule'))->first();
@@ -87,7 +87,7 @@ class EtudiantController extends Controller
     }
 }
 
-
+//modif
 public function modifier(Request $request, $matricule)
 {
     $etudiant = Etudiant::where('matricule', $matricule)->first();
@@ -101,6 +101,7 @@ public function modifier(Request $request, $matricule)
     return response()->json(['message' => 'Étudiant modifié avec succès'], 200);
 }
 
+//supprimer
 public function supprimer($matricule)
 {
     $etudiant = Etudiant::find($matricule);

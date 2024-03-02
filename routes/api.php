@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EtudiantController;
+use App\Http\Controllers\OrganismeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,9 @@ Route::put('/etudiants/{id}', [EtudiantController::class, 'modifier']);
 Route::delete('/etudiants/{matricule}', [EtudiantController::class, 'supprimer']);
 
 
-// --------Proffesseur
-
+// --------organisme
+Route::post('/organismes', [OrganismeController::class, 'ajouter']);
+Route::put('/organismes/{id}', [OrganismeController::class, 'modifier']);
+Route::delete('/organismes/{idorg}', [OrganismeController::class, 'supprimer']);
 
 
