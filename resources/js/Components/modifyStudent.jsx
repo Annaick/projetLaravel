@@ -70,7 +70,7 @@ export default function ModifStudent ({isOpen, onOpenChange, id, functionActuali
                 };
                 const response = await fetch(url, requestOptions);
                 if (response.ok) {
-                    toast.success('Étudiant ajouté avec succès');
+                    toast.success('Étudiant(e) modifié(e) avec succès');
                     // Réinitialisez les valeurs après l'ajout réussi si nécessaire
                     setMatricule('');
                     setNom('');
@@ -82,11 +82,11 @@ export default function ModifStudent ({isOpen, onOpenChange, id, functionActuali
                     functionActualise();
                     onOpenChange();
                 } else {
-                    toast.error('Une erreur s\'est produite lors de l\'ajout de l\'étudiant');
+                    toast.error('Une erreur s\'est produite lors de la modification de l\'étudiant(e)');
                 }
             } catch (error) {
                 console.error('Erreur lors de la requête API :', error);
-                toast.error('Une erreur s\'est produite lors de l\'ajout de l\'étudiant');
+                toast.error('Une erreur s\'est produite lors de la modification de l\'étudiant(e)');
             }
         }
     }

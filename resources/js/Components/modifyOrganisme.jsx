@@ -9,7 +9,7 @@ import { Toaster, toast } from "react-hot-toast";
 
 
 
-export default function ModifOrganisme ({isOpen, onOpenChange, id}){
+export default function ModifOrganisme ({isOpen, onOpenChange, id, functionActualise}){
 
 
     useEffect(()=>{
@@ -39,7 +39,34 @@ export default function ModifOrganisme ({isOpen, onOpenChange, id}){
         e.preventDefault();
         if (isInvalid) toast.error('Veuillez remplir tous les champs');
         else{
-            //do stuff
+            try {
+                const url = `http://127.0.0.1:8000/api/organismes/${id}`; 
+                
+                const requestOptions = {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        id,
+                        lieu,
+                        design
+                    })
+                };
+                const response = await fetch(url, requestOptions);
+                if (response.ok) {
+                    toast.success('Organisme modifié avec succès');
+                    // Réinitialisez les valeurs après l'ajout réussi si nécessaire
+                    setLieu('')
+                    setDesign('')
+                    // Fermez le modal
+                    functionActualise();
+                    onOpenChange();
+                } else {
+                    toast.error('Une erreur s\'est produite lors de la modification de l\'organisme');
+                }
+            } catch (error) {
+                console.error('Erreur lors de la requête API :', error);
+                toast.error('Une erreur s\'est produite lors de la modification de l\'organisme');
+            }
         }
     }
     
