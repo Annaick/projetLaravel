@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EtudiantController;
 use App\Http\Controllers\OrganismeController;
+use App\Http\Controllers\ProfesseurController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,4 +34,8 @@ Route::post('/organismes', [OrganismeController::class, 'ajouter']);
 Route::put('/organismes/{id}', [OrganismeController::class, 'modifier']);
 Route::delete('/organismes/{idorg}', [OrganismeController::class, 'supprimer']);
 
+//// -------professeur
+Route::post('/professeurs', [ProfesseurController::class, 'ajouter']);
+Route::put('/professeurs/{id}', [ProfesseurController::class, 'modifier']);
+Route::delete('/professeurs/{idprof}', [ProfesseurController::class, 'supprimer']);
 
