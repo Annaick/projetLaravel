@@ -14,7 +14,7 @@ const parcoursList = [
 
 
 
-export default function CreateStudent ({isOpen, onOpenChange}){
+export default function CreateStudent ({isOpen, onOpenChange, functionActualise}){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -47,6 +47,7 @@ export default function CreateStudent ({isOpen, onOpenChange}){
                     setNiveau('');
                     setParcours('');
                     // Fermez le modal
+                    functionActualise();
                     onOpenChange();
                 } else {
                     toast.error('Une erreur s\'est produite lors de l\'ajout de l\'étudiant');

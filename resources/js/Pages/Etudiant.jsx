@@ -7,6 +7,7 @@ import Delete from '@/Components/ConfirmDelete';
 import ModifStudent from '@/Components/modifyStudent';
 
 import stc from 'string-to-color';
+import toast from 'react-hot-toast';
 
 const getFirstLetter = name=> name[0];
 
@@ -18,7 +19,23 @@ export default function Etudiant({ auth }) {
     const [etudiants, setEtudiants] = useState([])
     const [id, setId] = useState('');
     const [idModif, setIdModif] = useState('');
+    const [idDelete, setIdDelete] = useState ('');
     const [name, setName] = useState('');
+
+
+    //Fonction qui supprime un étudiant
+    const deleteEtudiant = async (id)=>{
+        try{
+            const url = `http://localhost:8000/api/etudiants/${id}`
+            const response = await fetch(url, {method: 'DELETE'})
+            if (response.ok){
+                toast.success ('Etudiant supprimé avec succès')
+            }
+        }catch(e){
+            toast.error('Erreur lors de la suppression')
+        }
+        
+    }
 
 
     //création étudiant
@@ -96,7 +113,10 @@ export default function Etudiant({ auth }) {
                                             setIdModif(etudiant.matricule);
                                             onModifOpen();
                                         }} isIconOnly variant='light' className="text-gray-500" aria-label='editer' type='button'><IconEdit /></Button>
-                                        <Button onClick={onDeleteOpen} isIconOnly variant='light' className="text-red-500" aria-label='supprimer' type='button'><IconTrash /></Button>
+                                        <Button onClick={()=>{
+                                            setIdDelete(etudiant.matricule)
+                                            onDeleteOpen()
+                                        }} isIconOnly variant='light' className="text-red-500" aria-label='supprimer' type='button'><IconTrash /></Button>
                                     </div>
                                 </div>
                             </Card>
@@ -104,8 +124,8 @@ export default function Etudiant({ auth }) {
                     )
                 }) : <Spinner/>}
             </ul>
-            <CreateStudent isOpen={isOpen} onOpenChange={onOpenChange} />
-            <Delete isOpen={isDeleteOpen} onOpenChange={onOpenDeleteChange} entity={"etudiant"} />
+            <CreateStudent isOpen={isOpen} functionActualise={getEtudiants} onOpenChange={onOpenChange} />
+            <Delete isOpen={isDeleteOpen} functionActualise={getEtudiants} onOpenChange={onOpenDeleteChange} entity={"etudiant"} deleteFunction={deleteEtudiant} idDelete={idDelete} />
             <ModifStudent isOpen={isModifOpen} onOpenChange={onOpenModifChange} id={idModif} />
         </AuthenticatedLayout>
     );

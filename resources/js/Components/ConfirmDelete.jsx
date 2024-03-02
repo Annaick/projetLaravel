@@ -8,11 +8,13 @@ import { Toaster, toast } from "react-hot-toast";
 
 
 
-export default function Delete ({isOpen, onOpenChange, entity}){
+export default function Delete ({isOpen, onOpenChange, entity, deleteFunction, idDelete, functionActualise}){
 
     const handleDelete = async (e)=>{
         e.preventDefault();
-        toast.success (entity + " effacé")
+        await deleteFunction(idDelete)
+        await functionActualise()
+        onOpenChange()
     }
     
     return (
