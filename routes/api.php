@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EtudiantController;
+use App\Http\Controllers\SoutenirController;
 use App\Http\Controllers\OrganismeController;
 use App\Http\Controllers\ProfesseurController;
 
@@ -42,3 +43,8 @@ Route::post('/professeurs', [ProfesseurController::class, 'ajouter']);
 Route::put('/professeurs/{id}', [ProfesseurController::class, 'modifier']);
 Route::delete('/professeurs/{idprof}', [ProfesseurController::class, 'supprimer']);
 
+
+//// -------soutenir
+Route::post('/soutenir', [SoutenirController::class, 'ajouter']);
+Route::put('/soutenir/{id}', [SoutenirController::class, 'modifier']);
+Route::delete('/soutenir/{id}', [SoutenirController::class, 'supprimer']);
