@@ -23,6 +23,7 @@
         "@nextui-org/react": "^2.2.9",
         "@tabler/icons-react": "^2.47.0",
         "clsx": "^2.1.0",
-        "framer-motion": "^11.0.3"
+        "framer-motion": "^11.0.3",
+        "string-to-color": "^2.2.2"
     }
 }

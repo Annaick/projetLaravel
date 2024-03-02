@@ -2,8 +2,28 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import {Card, Button} from '@nextui-org/react'
 import { IconSearch, IconTrash, IconEdit } from '@tabler/icons-react';
+import { useState, useEffect } from 'react';
 
-export default function Organisme({ auth, organismes }) {
+export default function Organisme({ auth }) {
+
+    const [organismes, setOrganismes] = useState([])
+    const [lieu, setLieu] = useState('')
+
+    const getOrganismes = async ()=>{
+        try{
+            const url = `http://localhost:8000/api/organisme?lieu=${lieu}`;
+            const organismes = await fetch (url).then (res => res.json());
+            console.log (organismes);
+            setOrganismes(organismes);
+        }catch(e){
+            console.error(e)
+        }
+    }
+
+    useEffect(()=>{
+        getOrganismes();
+    }, [lieu]);
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -13,7 +33,12 @@ export default function Organisme({ auth, organismes }) {
                 <div className="flex items-center mt-10 mb-4 px-4 gap-4">
                     <form action="" method="get" className="  gap-4 flex items-center w-full">
                         <div className="w-6 h-6"><IconSearch className="text-gray-400 h-full"/></div>
-                        <input placeholder="Nom lieu" className="text-gray-400 dark rounded-full bg-gray-900/70 border-none w-full" type="text" name="name" id="name" />
+                        <input 
+                            placeholder="Nom lieu" 
+                            className="text-gray-400 dark rounded-full bg-gray-900/70 border-none w-full" 
+                            type="text" 
+                            value={lieu}
+                            onChange={e=> {setLieu(e.target.value)}} />
                     </form>
                     <Button className="bg-indigo-500 text-white">
                        + Ajouter
