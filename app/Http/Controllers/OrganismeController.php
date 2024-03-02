@@ -77,4 +77,13 @@ public function supprimer($idorg)
 
     return response()->json(['message' => 'organisme supprimé avec succès'], 200);
 }
+
+public function listerOrganisme()
+{
+    $organisme = Organisme::all();
+
+    return response()->json($organisme, 200);
+}
+
+
 }

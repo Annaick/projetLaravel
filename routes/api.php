@@ -28,11 +28,14 @@ Route::post('/etudiants', [EtudiantController::class, 'ajouter']);
 Route::put('/etudiants/{id}', [EtudiantController::class, 'modifier']);
 Route::delete('/etudiants/{matricule}', [EtudiantController::class, 'supprimer']);
 
+Route::get('/etudiants', [EtudiantController::class, 'listerEtudiant']);
+
 
 // --------organisme
 Route::post('/organismes', [OrganismeController::class, 'ajouter']);
 Route::put('/organismes/{id}', [OrganismeController::class, 'modifier']);
 Route::delete('/organismes/{idorg}', [OrganismeController::class, 'supprimer']);
+Route::get('/organismes', [OrganismeController::class, 'listerOrganisme']);
 
 //// -------professeur
 Route::post('/professeurs', [ProfesseurController::class, 'ajouter']);

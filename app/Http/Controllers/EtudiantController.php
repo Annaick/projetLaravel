@@ -87,6 +87,16 @@ public function supprimer($matricule)
     return response()->json(['message' => 'Étudiant supprimé avec succès'], 200);
 }
 
+public function listerEtudiant()
+{
+    $etudiant = Etudiant::all();
+
+    return response()->json($etudiant, 200);
+}
+
+
+
+
 
 
 
