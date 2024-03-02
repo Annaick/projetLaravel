@@ -15,7 +15,7 @@ const parcoursList = [
 
 
 
-export default function ModifStudent ({isOpen, onOpenChange, id}){
+export default function ModifStudent ({isOpen, onOpenChange, id, functionActualise}){
 
 
     useEffect(()=>{
@@ -53,14 +53,41 @@ export default function ModifStudent ({isOpen, onOpenChange, id}){
         e.preventDefault();
         if (isInvalid) toast.error('Veuillez remplir tous les champs');
         else{
-            //try{
-            //    const url = `http://localhost:8000/api/etudiant?matricule=${matricule}&nom=${nom}&prenoms=${prenoms}&email=${email}$niveau=${niveau}$parcours=${parcours}`
-            //    await fetch(url, {method: 'POST'})
-            //    .then(rep => rep.text())
-            //    .then(data => console.log(data))
-            //}catch(e){
-            //    toast.error(e)
-            //}
+            try {
+                const url = `http://127.0.0.1:8000/api/etudiants/${id}`; 
+                
+                const requestOptions = {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        matricule,
+                        nom,
+                        prenoms,
+                        adr_email: email,
+                        niveau,
+                        parcours
+                    })
+                };
+                const response = await fetch(url, requestOptions);
+                if (response.ok) {
+                    toast.success('Étudiant ajouté avec succès');
+                    // Réinitialisez les valeurs après l'ajout réussi si nécessaire
+                    setMatricule('');
+                    setNom('');
+                    setPrenoms('');
+                    setEmail('');
+                    setNiveau('');
+                    setParcours('');
+                    // Fermez le modal
+                    functionActualise();
+                    onOpenChange();
+                } else {
+                    toast.error('Une erreur s\'est produite lors de l\'ajout de l\'étudiant');
+                }
+            } catch (error) {
+                console.error('Erreur lors de la requête API :', error);
+                toast.error('Une erreur s\'est produite lors de l\'ajout de l\'étudiant');
+            }
         }
     }
     
