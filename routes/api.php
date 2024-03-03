@@ -50,3 +50,5 @@ Route::delete('/professeurs/{idprof}', [ProfesseurController::class, 'supprimer'
 Route::post('/soutenir', [SoutenirController::class, 'ajouter']);
 Route::put('/soutenir/{id}', [SoutenirController::class, 'modifier']);
 Route::delete('/soutenir/{id}', [SoutenirController::class, 'supprimer']);
+
+Route::get('/soutenirs/notes', [SoutenirController::class, 'listeNotesEntreAnnees']);
