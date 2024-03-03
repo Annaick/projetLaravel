@@ -6,6 +6,7 @@ import {toast, Toaster} from 'react-hot-toast';
 import CreateOrganisme from '@/Components/createOrganisme';
 import Delete from '@/Components/ConfirmDelete';
 import ModifOrganisme from '@/Components/modifyOrganisme';
+import createPDF from '@/Components/createPDF';
 
 export default function Organisme({ auth }) {
 
@@ -15,10 +16,11 @@ export default function Organisme({ auth }) {
     const [idDelete, setIdDelete] = useState('');
 
 
+
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const {isOpen: isDeleteOpen, onOpen: onDeleteOpen, onOpenChange: onOpenDeleteChange} = useDisclosure();
     const {isOpen: isModifOpen, onOpen: onModifOpen, onOpenChange: onOpenModifChange} = useDisclosure();
-
+    
     //Obtients la liste des organismes
 
     const getOrganismes = async ()=>{
@@ -105,7 +107,6 @@ export default function Organisme({ auth }) {
             <CreateOrganisme isOpen={isOpen} onOpenChange={onOpenChange} functionActualise={getOrganismes} />
             <Delete deleteFunction={deleteOrganisme} functionActualise={getOrganismes} idDelete={idDelete} isOpen={isDeleteOpen} onOpenChange={onOpenDeleteChange} entity={"organisme"} />
             <ModifOrganisme functionActualise={getOrganismes} isOpen={isModifOpen} onOpenChange={onOpenModifChange} id={idModif}  />
-
         </AuthenticatedLayout>
     );
 }

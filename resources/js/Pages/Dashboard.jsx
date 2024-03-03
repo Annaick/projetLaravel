@@ -1,16 +1,18 @@
 import CreateSoutenance from '@/Components/createSoutenance';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Button, useDisclosure, Card, CardFooter } from '@nextui-org/react';
-import { IconSearch, IconEdit, IconTrash } from '@tabler/icons-react';
+import { IconSearch, IconEdit, IconTrash, IconPdf } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import Delete from '@/Components/ConfirmDelete';
 import toast from 'react-hot-toast';
 import ModifSoutenir from '@/Components/modifySoutenir';
+import CreatePDF from '@/Components/createPDF';
 
 export default function Dashboard({ auth }) {
     const [soutenances, setSoutenances] = useState([]);
     const [idModif, setIdModif] = useState('');
     const [idDelete, setIdDelete] = useState ('');
+    const [activesoutenance, setActiveSoutenance] = useState({})
 
 
 
@@ -18,6 +20,7 @@ export default function Dashboard({ auth }) {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const {isOpen: isDeleteOpen, onOpen: onDeleteOpen, onOpenChange: onOpenDeleteChange} = useDisclosure();
     const {isOpen: isModifOpen, onOpen: onModifOpen, onOpenChange: onOpenModifChange} = useDisclosure();
+    const {isOpen: isPDFOpen, onOpen: onPDFOpen, onOpenChange: onOpenPDFChange} = useDisclosure();
 
 
     const getSoutenances = async()=>{
@@ -79,6 +82,14 @@ export default function Dashboard({ auth }) {
                         <p className='text-gray-300 mb-2 flex'><span className='mr-auto text-gray-400 underline'>Rapporteur int</span>{soutenance.rapporteur_int}</p>
                         <p className='text-gray-300 mb-2 flex'><span className='mr-auto text-gray-400 underline'>Rapporteur ext</span>{soutenance.rapporteur_ext}</p>
                         <CardFooter className='gap-4 justify-end'>
+                            <Button className='mr-auto bg-red-500/80' variant='shadow' onClick={
+                                ()=>{
+                                    setActiveSoutenance(soutenance)
+                                    onPDFOpen()
+                                }
+                            } startContent={<IconPdf/>}>
+                                Génerer un procès verbal
+                            </Button>
                             <Button onClick={()=>{
                                 setIdModif(soutenance.id);
                                 onModifOpen();
@@ -95,6 +106,7 @@ export default function Dashboard({ auth }) {
             <CreateSoutenance isOpen={isOpen} onOpenChange={onOpenChange} functionActualise={getSoutenances} />
             <Delete deleteFunction={deleteEtudiant} functionActualise={getSoutenances} idDelete={idDelete} isOpen={isDeleteOpen} onOpenChange={onOpenDeleteChange} entity={'soutenance'} />
             <ModifSoutenir functionActualise={getSoutenances} isOpen={isModifOpen} id={idModif} onOpenChange={onOpenModifChange}  />
+            <CreatePDF functionActualise={getSoutenances} isOpen={isPDFOpen} onOpenChange={onOpenPDFChange} soutenance={activesoutenance} />
         </AuthenticatedLayout>
     );
 }
