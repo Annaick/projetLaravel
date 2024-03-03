@@ -10,9 +10,14 @@ class SoutenirController extends Controller
 {
 
     //Renvoie la liste des soutenances
-    public function index (){
-        $soutenances = DB::table('soutenir')->get();
-        return $soutenances;
+    public function index (Request $request){
+        $id = $request->input('id');
+        
+        $query = Soutenir::query();
+        if ($id){
+            $query->where('id', $id);
+        }
+        return $query->get();
     }
 
         //ajouter

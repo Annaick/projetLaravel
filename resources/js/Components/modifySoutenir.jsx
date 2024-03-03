@@ -1,5 +1,7 @@
 
 
+import { useEffect, useState } from "react";
+import { Toaster, toast } from "react-hot-toast";
 import { Modal,
     ModalContent, 
     ModalBody, 
@@ -10,19 +12,20 @@ import { Modal,
     Autocomplete,
     AutocompleteItem,
  } from "@nextui-org/react"
-import { useEffect, useState } from "react";
-import { Toaster, toast } from "react-hot-toast";
+
 
 const dateActuelle = new Date();
 
-export default function CreateSoutenance ({isOpen, onOpenChange, functionActualise}){
+
+export default function ModifSoutenir ({isOpen, onOpenChange, id, functionActualise}){
+
 
     const [etudiants, setEtudiants] = useState([]); //Contient la liste des etudiants
     const [professeurs, setProfesseurs] = useState([]); //contient la liste des professeurs
     const [organismes, setOrganismes] = useState([]);
-    
-    //recuperer la liste des etudiants
-    const getEtudiants = async ()=>{
+
+     //recuperer la liste des etudiants
+     const getEtudiants = async ()=>{
         try{
             const url = `http://localhost:8000/api/etudiant`;
             const etudiants = await fetch (url).then (res => res.json());
@@ -33,11 +36,6 @@ export default function CreateSoutenance ({isOpen, onOpenChange, functionActuali
         }
     }
 
-    useEffect(()=>{
-        getEtudiants()
-        getProfesseurs()
-        getOrganismes()
-    }, [isOpen])
 
     //recuperer la liste des professeurs
     const getProfesseurs = async ()=>{
@@ -61,18 +59,63 @@ export default function CreateSoutenance ({isOpen, onOpenChange, functionActuali
         }
     }
 
-    const handleSubmit = async (e)=>{
-        e.preventDefault();
-        if (isInvalid) {
-            toast.error('Veuillez remplir tous les champs');
-        }
 
+    useEffect(()=>{
+        fetchData()
+        getEtudiants()
+        getOrganismes()
+        getProfesseurs()
+    }, [id])
+    
+    const fetchData = async ()=>{
+        try{
+            const url = `http://localhost:8000/api/soutenances?id=${id}`;
+            const data = await fetch (url).then (res => res.json());
+            const soutenance = data[0]
+            
+            const annees = soutenance.annee_univ.split('-')
+
+            setMatricule(soutenance.matricule)
+            setAnneeDebut(annees[0])
+            setAnneeFin(annees[1]);
+            setIdOrg(soutenance.idorg)
+            setAnneeUniversitaire(soutenance.annee_univ)
+            setExaminateur(soutenance.examinateur)
+            setNote(soutenance.note)
+            setPrésident(soutenance.président)
+            setRapporteur_ext(soutenance.rapporteur_ext)
+            setRapporteur_int(soutenance.rapporteur_int)
+            
+            
+        }catch(e){
+            console.error(e)
+        }
+    }
+
+    const reset = ()=>{
+        setMatricule('')
+        setAnneeDebut(dateActuelle.getFullYear())
+        setAnneeFin(dateActuelle.getFullYear() - 1);
+        setIdOrg('')
+        setAnneeUniversitaire(dateActuelle.getFullYear + '-' + dateActuelle.getFullYear())
+        setExaminateur('')
+        setNote(0)
+        setPrésident('')
+        setRapporteur_ext('')
+        setRapporteur_int('')
+    }
+
+    
+    const handleEdit = async (e)=>{
+        e.preventDefault();
+        if (isInvalid) toast.error('Veuillez remplir tous les champs');
         else{
             try {
-                const url = 'http://127.0.0.1:8000/api/soutenir'; 
+                alert(idorg)
+                const url = `http://127.0.0.1:8000/api/soutenir/${id}`; 
                 
                 const requestOptions = {
-                    method: 'POST',
+                    method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         matricule,
@@ -87,24 +130,18 @@ export default function CreateSoutenance ({isOpen, onOpenChange, functionActuali
                 };
                 const response = await fetch(url, requestOptions);
                 if (response.ok) {
-                    toast.success('Étudiant ajouté avec succès');
+                    toast.success('Soutenance modifé avec succès');
                     // Réinitialisez les valeurs après l'ajout réussi si nécessaire
-                    setMatricule('');
-                    setIdOrg('');
-                    setPrésident('');
-                    setNote(0);
-                    setExaminateur('');
-                    setRapporteur_int('');
-                    setRapporteur_ext('');
+                    reset()
                     // Fermez le modal
                     functionActualise();
                     onOpenChange();
                 } else {
-                    toast.error('Une erreur s\'est produite lors de l\'ajout du soutenance');
+                    toast.error('Une erreur s\'est produite lors de la modification du soutenance');
                 }
             } catch (error) {
                 console.error('Erreur lors de la requête API :', error);
-                toast.error('Une erreur s\'est produite lors de l\'ajout du soutenance');
+                toast.error('Une erreur s\'est produite lors de la modification du soutenance');
             }
         }
     }
@@ -120,19 +157,8 @@ export default function CreateSoutenance ({isOpen, onOpenChange, functionActuali
     const [rapporteur_int, setRapporteur_int] = useState('');
     const [rapporteur_ext, setRapporteur_ext] = useState('');
 
+    const [isInvalid, setIsInvalid] = useState(true);
 
-
-    useEffect(()=>{
-        setAnneeFin(Number(anneeDebut) + 1);
-        setAnneeUniversitaire(anneeDebut + '-' + (Number(anneeDebut)+1));
-    }, [anneeDebut])
-
-
-
-    const [isInvalid, setIsInvalid] = useState(true) // Devient false si tous les champs sont ok
-
-
-    //verifie que tous les champs sont ok
     useEffect(()=>{
         if (
             matricule.trim() === ""
@@ -147,8 +173,13 @@ export default function CreateSoutenance ({isOpen, onOpenChange, functionActuali
         setIsInvalid(false)
     }, [matricule, idorg, anneFin, anneeDebut, note, président, examinateur, rapporteur_ext, rapporteur_int])
 
+    useEffect(()=>{
+        setAnneeFin(Number(anneeDebut) + 1);
+        setAnneeUniversitaire(anneeDebut + '-' + (Number(anneeDebut)+1));
+    }, [anneeDebut])
+
     return (
-        <Modal className='dark max-h-[90vh] overflow-scroll overflow-x-hidden' isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Modal className='dark max-h-[90vh] overflow-scroll overflow-x-hidden' isOpen={isOpen} onOpenChange={onOpenChange} onClose={reset}>
         <Toaster toastOptions={{
             className: '!bg-gray-800 !text-gray-400',
             style: {
@@ -158,11 +189,11 @@ export default function CreateSoutenance ({isOpen, onOpenChange, functionActuali
             {(onClose)=>(
                 <>
                     <ModalHeader className='flex flex-col gap-1 text-gray-400'>
-                        <h2>Nouveau soutenance</h2>
+                        <h2>Modifier soutenance</h2>
                         <span className='text-xs font-light'>Veuillez bien remplir tous les champs pour éviter toutes erreurs inutiles</span>
                     </ModalHeader>
                     <ModalBody>
-                        <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleEdit}>
                             <Autocomplete 
                                 label="Matricule étudiant"
                                 isRequired
@@ -186,7 +217,6 @@ export default function CreateSoutenance ({isOpen, onOpenChange, functionActuali
                             <Autocomplete 
                                 label="ID organisme"
                                 isRequired
-                                value={idorg}
                                 className="dark text-gray-500 mb-4"
                                 onSelect={e=>setIdOrg(e.target.value)}
                                 classNames={
@@ -339,8 +369,11 @@ export default function CreateSoutenance ({isOpen, onOpenChange, functionActuali
                         </form>
                     </ModalBody>
                     <ModalFooter>
-                       <Button color='danger' variant='light' onClick={onClose}>Fermer</Button>
-                        <Button variant='solid' className='bg-indigo-600' onClick={handleSubmit}>Ajouter</Button>
+                        <Button color='danger' variant='light' onClick={()=>{
+                            reset()
+                            onClose()
+                        }}>Fermer</Button>
+                        <Button variant='solid' className='bg-indigo-600' onClick={handleEdit}>Modifier</Button>
                         
                     </ModalFooter>
                 </>

@@ -28,7 +28,7 @@ Route::prefix('api')->group(function (){
     Route::get('/etudiant', [EtudiantController::class, 'index'])->name('api.etudiant');
     Route::get('/professeur', [ProfesseurController::class, 'index'])->name('api.professeur');
     Route::get('/organisme', [OrganismeController::class, 'index'])->name('api.organisme');
-    Route::get('/soutenance', [SoutenirController::class, 'index'])->name('api.soutenance');
+    Route::get('/soutenances', [SoutenirController::class, 'index'])->name('api.soutenance');
 })->middleware(['auth', 'verified'])->name('api');
 
 
