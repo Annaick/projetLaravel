@@ -92,7 +92,8 @@ export default function Professeurs({ auth }) {
                                         />
                                         <div className="flex flex-col ">
                                             <p><span className="font-bold">{professeur.civilite}</span>  {professeur.nom} <span >{professeur.prenoms}</span></p>
-                                            <p className="text-xs text-gray-500 underline underline-offset-2">{professeur.grade}</p>
+                                            <p className="text-sm">{professeur.grade}</p>
+                                            <p className='text-gray-500 underline text-sm'>id: {professeur.idprof}</p>
                                         </div>
                         
                                     </div>

@@ -80,8 +80,9 @@ export default function Organisme({ auth }) {
                                 <div className='flex gap-4 p-4'>
                                     <div className="gap-2 flex">
                                         <div className="flex flex-col ">
-                                            <p>{organisme.idorg} - {organisme.lieu}</p>
-                                            <p className="text-xs text-gray-500 underline underline-offset-2">{organisme.design}</p>
+                                            <p className='mb-2'>{organisme.lieu}</p>
+                                            <p className="text-sm">{organisme.design}</p>
+                                            <p className='text-sm text-gray-500 underline underline-offset-2'>id: {organisme.idorg}</p>
                                         </div>
                         
                                     </div>

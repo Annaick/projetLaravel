@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Soutenir;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SoutenirController extends Controller
 {
+
+    //Renvoie la liste des soutenances
+    public function index (){
+        $soutenances = DB::table('soutenir')->get();
+        return $soutenances;
+    }
+
         //ajouter
     public function ajouter(Request $request)
     {

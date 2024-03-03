@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Etudiant;
@@ -103,7 +103,7 @@ public function listerEtudiant()
     public function listeInscritsParNiveau()
     {
         // Récupérer la liste des étudiants inscrits par niveau avec l'effectif total
-        $etudiantsParNiveau = Etudiant::select('niveau', \DB::raw('count(*) as total'))
+        $etudiantsParNiveau = Etudiant::select('niveau', DB::raw('count(*) as total'))
                                     ->groupBy('niveau')
                                     ->orderBy('niveau')
                                     ->get();
