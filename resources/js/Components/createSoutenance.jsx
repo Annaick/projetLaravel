@@ -199,8 +199,8 @@ export default function CreateSoutenance ({isOpen, onOpenChange, functionActuali
                                 } 
                             >
                                 {organismes.map((organisme)=>(
-                                    <AutocompleteItem onClick={()=>{setIdOrg(organisme.idorg)}} value={organisme.idorg} description={organisme.idorg + ' - ' + organisme.design} className="text-gray-400" key={organisme.idorg}>
-                                        {organisme.lieu}
+                                    <AutocompleteItem onClick={()=>{setIdOrg(organisme.idorg)}} value={organisme.idorg} description={organisme.lieu + ' - ' + organisme.design} className="text-gray-400" key={organisme.idorg}>
+                                        {organisme.idorg}
                                     </AutocompleteItem>
                                 ))}
                             </Autocomplete>

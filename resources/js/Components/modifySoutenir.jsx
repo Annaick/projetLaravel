@@ -111,7 +111,6 @@ export default function ModifSoutenir ({isOpen, onOpenChange, id, functionActual
         if (isInvalid) toast.error('Veuillez remplir tous les champs');
         else{
             try {
-                alert(idorg)
                 const url = `http://127.0.0.1:8000/api/soutenir/${id}`; 
                 
                 const requestOptions = {
@@ -229,8 +228,8 @@ export default function ModifSoutenir ({isOpen, onOpenChange, id, functionActual
                                 } 
                             >
                                 {organismes.map((organisme)=>(
-                                    <AutocompleteItem onClick={()=>{setIdOrg(organisme.idorg)}} value={organisme.idorg} description={organisme.idorg + ' - ' + organisme.design} className="text-gray-400" key={organisme.idorg}>
-                                        {organisme.lieu}
+                                    <AutocompleteItem onClick={()=>{setIdOrg(organisme.idorg)}} value={organisme.idorg} description={organisme.lieu + ' - ' + organisme.design} className="text-gray-400" key={organisme.idorg}>
+                                        {organisme.idorg}
                                     </AutocompleteItem>
                                 ))}
                             </Autocomplete>
