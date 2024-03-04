@@ -48,6 +48,7 @@ export default function CreateStudent ({isOpen, onOpenChange, functionActualise}
                     setParcours('');
                     // Fermez le modal
                     functionActualise();
+                    functionActualise();
                     onOpenChange();
                 } else {
                     toast.error('Une erreur s\'est produite lors de l\'ajout de l\'étudiant');

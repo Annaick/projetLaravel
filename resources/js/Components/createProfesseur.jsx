@@ -49,6 +49,7 @@ export default function CreateProfesseur ({isOpen, onOpenChange, functionActuali
                     setGrade('');
                     // Fermez le modal
                     functionActualise();
+                    functionActualise();
                     onOpenChange();
                 } else {
                     toast.error('Une erreur s\'est produite lors de l\'ajout du professeur');

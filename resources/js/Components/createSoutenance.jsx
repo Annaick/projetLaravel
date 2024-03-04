@@ -98,6 +98,7 @@ export default function CreateSoutenance ({isOpen, onOpenChange, functionActuali
                     setRapporteur_ext('');
                     // Fermez le modal
                     functionActualise();
+                    functionActualise();
                     onOpenChange();
                 } else {
                     toast.error('Une erreur s\'est produite lors de l\'ajout du soutenance');
