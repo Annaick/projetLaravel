@@ -21,7 +21,7 @@ class SoutenirController extends Controller
     }
 
         //ajouter
-    public function ajouter(Request $request)
+   /* public function ajouter(Request $request)
     {
             $soutenir = new Soutenir();
             $soutenir-> matricule= $request->input('matricule');
@@ -33,9 +33,31 @@ class SoutenirController extends Controller
             $soutenir-> rapporteur_int = $request->input('rapporteur_int');
             $soutenir-> rapporteur_ext = $request->input('rapporteur_ext');
             $soutenir->save();
-            return response()->json(['message' => 'Soutenir ajouté avec succès'], 201);
-        
+            return response()->json(['message' => 'Soutenir ajouté avec succès'], 201); 
+             /**
+     * Ajoute un nouveau soutien.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function ajouter(Request $request)
+    {
+        // Validation des données reçues du formulaire
+        $request->validate([
+            'matricule' => 'required|string',
+            'idorg' => 'required|integer',
+            'annee_univ' => 'required|regex:/^\d{4}-\d{4}$/',
+            'note' => 'required|integer',
+            'président' => 'required|string',
+            'examinateur' => 'required|string',
+            'rapporteur_int' => 'required|string',
+            'rapporteur_ext' => 'required|string',
+        ]);
+        $soutenir = Soutenir::create($request->all());
+        return response()->json(['message' => 'Soutenir ajouté avec succès', 'soutenir' => $soutenir], 201);
     }
+
+        
     //modifier
     public function modifier(Request $request, $id)
     {
@@ -63,4 +85,20 @@ class SoutenirController extends Controller
     
         return response()->json(['message' => 'supprimé avec succès'], 200);
     }
+
+    //les notes entre les deux années universitaires
+    public function listeNotesEntreAnnees(Request $request)
+    {
+        $request->validate([
+            'annee_debut' => 'required|date_format:Y',
+            'annee_fin' => 'required|date_format:Y|after_or_equal:annee_debut',
+        ]);
+
+        $notes = Soutenir::whereBetween('annee_univ', [$request->annee_debut, $request->annee_fin])
+                         ->whereNotNull('note') 
+                         ->get();
+
+        return response()->json(['notes' => $notes]);       
+    }
+
 }
