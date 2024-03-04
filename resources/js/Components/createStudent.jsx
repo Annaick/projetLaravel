@@ -47,7 +47,7 @@ export default function CreateStudent ({isOpen, onOpenChange, functionActualise}
                     setNiveau('');
                     setParcours('');
                     // Fermez le modal
-                    functionActualise();
+                    await functionActualise();
                     functionActualise();
                     onOpenChange();
                 } else {
