@@ -113,10 +113,29 @@ public function listerEtudiant()
     }
 
 //Liste des étudiants qui n’ont pas encore effectué de soutenance
-public function etudiantsSansSoutenance()
+public function etudiantsSansSoutenance(Request $request)
 {
-    $etudiantsSansSoutenance = Etudiant::whereDoesntHave('soutenir')->get();
-    return response()->json(['etudiants_sans_soutenance' => $etudiantsSansSoutenance]);
+
+    $id= $request->input('id');
+    $name = $request->input('name');
+
+    $query = Etudiant::query();
+
+    
+    //Ajout filtre
+    if ($id){
+        $query->where('matricule', 'like', $id.'%');
+    }
+    if ($name){
+        $query->where('nom', 'like', '%'.$name.'%')->orWhere('prenoms', 'like', '%'.$name.'%');
+    }
+    
+    $query->doesntHave('soutenir');
+    
+    $etudiants = $query->get();
+    
+    //$etudiantsSansSoutenance = Etudiant::whereDoesntHave('soutenir')->get();
+    return response()->json(['etudiants_sans_soutenance' => $etudiants]);
 }
 
 

@@ -102,7 +102,7 @@ export default function CreatePDF ({isOpen, onOpenChange, functionActualise, sou
                     </ModalBody>
                     <ModalFooter>
                         <Button color='danger' variant='light' onClick={onClose}>Fermer</Button>
-                        <Button variant='solid' className='bg-indigo-600'>
+                        <Button onClick={()=>{setTimeout(onClose, 500)}} variant='solid' className='bg-indigo-600'>
                             <PDFDownloadLink document={<PDFcomposant nom={nom} parcours={parcours} text={text} soutenance={soutenance}/>} fileName="Proces.pdf">
                                 {({loadign})=> loadign? 'Chargement...': 'Télécharger'}
                             </PDFDownloadLink>

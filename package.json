@@ -20,11 +20,13 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
+        "@emotion/react": "^11.11.4",
         "@nextui-org/react": "^2.2.9",
         "@react-pdf/renderer": "^3.3.8",
         "@tabler/icons-react": "^2.47.0",
         "clsx": "^2.1.0",
         "framer-motion": "^11.0.3",
+        "react-awesome-reveal": "^4.2.8",
         "react-hook-form": "^7.51.0",
         "react-hot-toast": "^2.4.1",
         "string-to-color": "^2.2.2"

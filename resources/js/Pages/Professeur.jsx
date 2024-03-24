@@ -8,6 +8,7 @@ import CreateProfesseur from '@/Components/createProfesseur';
 import Delete from '@/Components/ConfirmDelete';
 import ModifProfesseur from '@/Components/modifyProfesseur';
 import {toast, Toaster} from 'react-hot-toast';
+import { Zoom as Transintion } from 'react-awesome-reveal';
 
 
 const getFirstLetter = name=> name[0];
@@ -76,6 +77,7 @@ export default function Professeurs({ auth }) {
                 </div>
             </header>
 
+            <Transintion duration={500} cascade triggerOnce>
             <ul aria-label="La liste des professeurs" className="p-4">
                 {professeurs.map((professeur, index)=>{
                     const color = stc (professeur.nom + professeur.prenoms)
@@ -115,6 +117,7 @@ export default function Professeurs({ auth }) {
                     )
                 })}
             </ul>
+            </Transintion>
             <CreateProfesseur  functionActualise={getProfesseurs} isOpen={isOpen} onOpenChange={onOpenChange} />
             <Delete deleteFunction={deleteProfesseur} idDelete={idDelete} functionActualise={getProfesseurs} isOpen={isDeleteOpen} onOpenChange={onOpenDeleteChange} entity={"professeur"}/>
             <ModifProfesseur functionActualise={getProfesseurs} isOpen={isModifOpen} onOpenChange={onOpenModifChange} id={modifId} />

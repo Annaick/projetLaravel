@@ -6,7 +6,7 @@ import {toast, Toaster} from 'react-hot-toast';
 import CreateOrganisme from '@/Components/createOrganisme';
 import Delete from '@/Components/ConfirmDelete';
 import ModifOrganisme from '@/Components/modifyOrganisme';
-import createPDF from '@/Components/createPDF';
+import { Zoom as Transintion } from 'react-awesome-reveal';
 
 export default function Organisme({ auth }) {
 
@@ -74,6 +74,7 @@ export default function Organisme({ auth }) {
                 </div>
             </header>
 
+            <Transintion triggerOnce cascade duration={500}>
             <ul aria-label="La liste des organismes" className="p-4">
                 {organismes.map((organisme, index)=>{
                     return (
@@ -104,6 +105,7 @@ export default function Organisme({ auth }) {
                     )
                 })}
             </ul>
+            </Transintion>
             <CreateOrganisme isOpen={isOpen} onOpenChange={onOpenChange} functionActualise={getOrganismes} />
             <Delete deleteFunction={deleteOrganisme} functionActualise={getOrganismes} idDelete={idDelete} isOpen={isDeleteOpen} onOpenChange={onOpenDeleteChange} entity={"organisme"} />
             <ModifOrganisme functionActualise={getOrganismes} isOpen={isModifOpen} onOpenChange={onOpenModifChange} id={idModif}  />

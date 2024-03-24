@@ -179,7 +179,7 @@ export default function CreateSoutenance ({isOpen, onOpenChange, functionActuali
                                 } 
                             >
                                 {etudiants.map((etudiant)=>(
-                                    <AutocompleteItem value={etudiant.matricule} description={etudiant.nom + ' ' + etudiant.matricule} className="text-gray-400" key={etudiant.matricule}>
+                                    <AutocompleteItem value={etudiant.matricule} description={etudiant.nom + ' ' + etudiant.prenoms} className="text-gray-400" key={etudiant.matricule}>
                                         {etudiant.matricule}
                                     </AutocompleteItem>
                                 ))}
