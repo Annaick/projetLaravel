@@ -1,6 +1,6 @@
 import CreateSoutenance from '@/Components/createSoutenance';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Button, useDisclosure, Card, CardFooter } from '@nextui-org/react';
+import { Button, useDisclosure, Card, CardFooter, Input } from '@nextui-org/react';
 import { IconSearch, IconEdit, IconTrash, IconPdf } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import Delete from '@/Components/ConfirmDelete';
@@ -9,11 +9,17 @@ import ModifSoutenir from '@/Components/modifySoutenir';
 import { Zoom as Transintion } from 'react-awesome-reveal';
 import CreatePDF from '@/Components/createPDF';
 
+
+const date = new Date();
+
 export default function Dashboard({ auth }) {
     const [soutenances, setSoutenances] = useState([]);
     const [idModif, setIdModif] = useState('');
     const [idDelete, setIdDelete] = useState ('');
     const [activesoutenance, setActiveSoutenance] = useState({})
+    const [debut, setDebut] = useState('');
+    const [fin, setFin] = useState('');
+    const [id, setId] = useState('');
 
 
 
@@ -25,7 +31,7 @@ export default function Dashboard({ auth }) {
 
 
     const getSoutenances = async()=>{
-        const soutenances = await fetch ('http://localhost:8000/api/soutenances', {method: 'GET'})
+        const soutenances = await fetch (`http://localhost:8000/api/soutenances?id=${id}&debut=${debut}&fin=${fin}`, {method: 'GET'})
         const data = await soutenances.json()
         console.log (data)
         setSoutenances(data)
@@ -33,7 +39,7 @@ export default function Dashboard({ auth }) {
 
     useEffect(()=>{
         getSoutenances( )
-    }, [])
+    }, [id, debut, fin])
 
 
 
@@ -57,8 +63,36 @@ export default function Dashboard({ auth }) {
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
         >
             <header className='w-full'>
-                <div className="flex items-center justify-end w-full mt-10 mb-4 px-4 gap-4">
-                    <Button onClick={onOpen} className="bg-indigo-500 text-white">
+                <div className="flex items-center w-full mt-10 mb-4 px-4 gap-4">
+                <form action="" method="get" className="  gap-2 flex items-center w-full">
+                        <div className="w-6 h-6"><IconSearch className="text-gray-400 h-full"/></div>
+                        <input placeholder="ID" 
+                            className="text-gray-400 dark rounded-full bg-gray-900/70 border-none max-w-[5rem]" 
+                            type="number" 
+                            name="id" 
+                            id="id"
+                            value={id}
+                            onChange={e=>{setId(e.target.value)}} />
+                        <input placeholder="Année début"
+                            className="ml-auto text-gray-400 dark rounded-full bg-gray-900/70 border-none max-w-[9rem]"  
+                            type="number" 
+                            name="name" 
+                            id="name"
+                            value={debut}
+                            onChange={e=>{setDebut(e.target.value)}} 
+                            min={2000}
+                            />
+                        <input placeholder="Année fin"
+                            className="text-gray-400 dark rounded-full bg-gray-900/70 border-none max-w-[9rem]"  
+                            type="number" 
+                            name="anneFin" 
+                            id="anneFin"
+                            value={fin}
+                            onChange={e=>{setFin(e.target.value)}}
+                            min={2000}
+                            />
+                    </form>
+                    <Button onClick={onOpen} className="bg-indigo-500 text-white ml-auto">
                        + Ajouter
                     </Button>
                 </div>

@@ -12,10 +12,15 @@ class SoutenirController extends Controller
     //Renvoie la liste des soutenances
     public function index (Request $request){
         $id = $request->input('id');
+        $debut = $request->input('debut');
+        $fin = $request->input('fin');
         
         $query = Soutenir::query();
         if ($id){
-            $query->where('id', $id);
+            $query->where('matricule', $id);
+        }
+        if ($debut && $fin){
+            $query->whereBetween('annee_univ', [$debut, $fin]);
         }
         return $query->get();
     }
