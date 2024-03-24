@@ -57,7 +57,7 @@ export default function CreatePDF ({isOpen, onOpenChange, functionActualise, sou
     
     const fetchData = async (id)=>{
         try{
-            const url = `http://localhost:8000/api/etudiant?id=${id}&name=`;
+            const url = `http://localhost:8000/api/etudiant?id=${id}`;
             const data = await fetch (url).then (res => res.json());
             const etudiant = data[0]
     
