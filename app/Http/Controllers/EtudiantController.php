@@ -122,15 +122,19 @@ public function etudiantsSansSoutenance(Request $request)
     $query = Etudiant::query();
 
     
+    $query->doesntHave('soutenir');
+
     //Ajout filtre
     if ($id){
         $query->where('matricule', 'like', $id.'%');
     }
     if ($name){
-        $query->where('nom', 'like', '%'.$name.'%')->orWhere('prenoms', 'like', '%'.$name.'%');
+        $query->where(function ($query) use ($name) {
+            $query->where('nom', 'like', '%'.$name.'%')
+                  ->orWhere('prenoms', 'like', '%'.$name.'%');
+        });
     }
     
-    $query->doesntHave('soutenir');
     
     $etudiants = $query->get();
     
