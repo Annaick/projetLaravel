@@ -77,7 +77,7 @@ export default function Professeurs({ auth }) {
                 </div>
             </header>
 
-            <Transintion duration={500} cascade triggerOnce>
+            <Transintion duration={300} cascade triggerOnce>
             <ul aria-label="La liste des professeurs" className="p-4">
                 {professeurs.map((professeur, index)=>{
                     const color = stc (professeur.nom + professeur.prenoms)

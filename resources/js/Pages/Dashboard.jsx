@@ -97,7 +97,7 @@ export default function Dashboard({ auth }) {
                     </Button>
                 </div>
             </header>
-            <Transintion cascade duration={500} triggerOnce>
+            <Transintion cascade duration={300} triggerOnce>
                 <ul className='p-4'>
                     {Array.isArray(soutenances)? soutenances.map((soutenance, index) =>(
                     <li>

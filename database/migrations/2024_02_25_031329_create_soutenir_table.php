@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('rapporteur_ext');
             $table->timestamps();
 
-            $table->foreign('matricule')->references('matricule')->on('etudiants');
-            $table->foreign('idorg')->references('idorg')->on('organismes');
+            $table->foreign('matricule')->references('matricule')->on('etudiants')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('idorg')->references('idorg')->on('organismes')->onUpdate('cascade');
         });
     }
 

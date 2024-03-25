@@ -120,7 +120,7 @@ export default function Etudiant({ auth }) {
                     </RadioGroup>
                 </div>
             </header>
-            <Transintion cascade duration={500} triggerOnce>
+            <Transintion cascade duration={300} triggerOnce>
                 <ul aria-label="La liste des étudiants" className="p-4">
                     {Array.isArray(etudiants)? etudiants.map((etudiant, index)=>{
                         const color = stc(etudiant.prenoms + etudiant.nom);

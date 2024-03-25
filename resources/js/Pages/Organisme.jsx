@@ -74,7 +74,7 @@ export default function Organisme({ auth }) {
                 </div>
             </header>
 
-            <Transintion triggerOnce cascade duration={500}>
+            <Transintion triggerOnce cascade duration={300}>
             <ul aria-label="La liste des organismes" className="p-4">
                 {organismes.map((organisme, index)=>{
                     return (
