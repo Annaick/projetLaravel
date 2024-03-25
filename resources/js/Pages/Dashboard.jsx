@@ -33,7 +33,6 @@ export default function Dashboard({ auth }) {
     const getSoutenances = async()=>{
         const soutenances = await fetch (`http://localhost:8000/api/soutenances?id=${id}&debut=${debut}&fin=${fin}`, {method: 'GET'})
         const data = await soutenances.json()
-        console.log (data)
         setSoutenances(data)
     }
 
@@ -100,8 +99,8 @@ export default function Dashboard({ auth }) {
             <Transintion cascade duration={300} triggerOnce>
                 <ul className='p-4'>
                     {Array.isArray(soutenances)? soutenances.map((soutenance, index) =>(
-                    <li>
-                        <Card key={index} className='dark bg-gray-800 mt-4 p-4 font-light text-sm'>
+                    <li key={index}>
+                        <Card className='dark bg-gray-800 mt-4 p-4 font-light text-sm'>
                             <p className='text-gray-300 mb-2 flex'><span className='mr-auto text-gray-400 underline'>Numéro matricule: </span> {soutenance.matricule}</p>
                             <p className='text-gray-300 mb-2 flex'><span className='mr-auto text-gray-400 underline'>ID Organisme: </span>{soutenance.idorg}</p>
                             <p className='text-gray-300 mb-2 flex'><span className='mr-auto text-gray-400 underline'>Année univeristaire: </span>{soutenance.annee_univ}</p>

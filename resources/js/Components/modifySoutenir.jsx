@@ -24,7 +24,21 @@ export default function ModifSoutenir ({isOpen, onOpenChange, id, functionActual
     const [professeurs, setProfesseurs] = useState([]); //contient la liste des professeurs
     const [organismes, setOrganismes] = useState([]);
 
-     //recuperer la liste des etudiants
+
+    const [matricule, setMatricule] = useState('');
+    const [idorg, setIdOrg] = useState('');
+    const [anneeDebut, setAnneeDebut] = useState(dateActuelle.getFullYear());
+    const [anneFin, setAnneeFin] = useState(dateActuelle.getFullYear() + 1)
+    const [annee_univ, setAnneeUniversitaire] = useState(anneeDebut +'-'+ (anneeDebut + 1));
+    const [note, setNote]= useState(0);
+    const [président, setPrésident] = useState('');
+    const [examinateur, setExaminateur] = useState('');
+    const [rapporteur_int, setRapporteur_int] = useState('');
+    const [rapporteur_ext, setRapporteur_ext] = useState('');
+
+    const [isInvalid, setIsInvalid] = useState(true);
+
+    //recuperer la liste des etudiants
      const getEtudiants = async ()=>{
         try{
             const url = `http://localhost:8000/api/etudiant`;
@@ -71,13 +85,16 @@ export default function ModifSoutenir ({isOpen, onOpenChange, id, functionActual
         try{
             const url = `http://localhost:8000/api/soutenances?id=${id}`;
             const data = await fetch (url).then (res => res.json());
-            const soutenance = data[0]
             
-            const annees = soutenance.annee_univ.split('-')
+            const soutenance = await data[0]
+
+            
+            const annees = soutenance.annee_univ.split('-');
+            
+            console.log (soutenance.annee_univ)
 
             setMatricule(soutenance.matricule)
             setAnneeDebut(annees[0])
-            setAnneeFin(annees[1]);
             setIdOrg(soutenance.idorg)
             setAnneeUniversitaire(soutenance.annee_univ)
             setExaminateur(soutenance.examinateur)
@@ -144,19 +161,7 @@ export default function ModifSoutenir ({isOpen, onOpenChange, id, functionActual
             }
         }
     }
-    
-    const [matricule, setMatricule] = useState('');
-    const [idorg, setIdOrg] = useState('');
-    const [anneeDebut, setAnneeDebut] = useState(dateActuelle.getFullYear());
-    const [anneFin, setAnneeFin] = useState(dateActuelle.getFullYear() + 1)
-    const [annee_univ, setAnneeUniversitaire] = useState(anneeDebut +'-'+ (anneeDebut + 1));
-    const [note, setNote]= useState(0);
-    const [président, setPrésident] = useState('');
-    const [examinateur, setExaminateur] = useState('');
-    const [rapporteur_int, setRapporteur_int] = useState('');
-    const [rapporteur_ext, setRapporteur_ext] = useState('');
 
-    const [isInvalid, setIsInvalid] = useState(true);
 
     useEffect(()=>{
         if (

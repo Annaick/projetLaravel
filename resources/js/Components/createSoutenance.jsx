@@ -187,7 +187,6 @@ export default function CreateSoutenance ({isOpen, onOpenChange, functionActuali
                             <Autocomplete 
                                 label="ID organisme"
                                 isRequired
-                                value={idorg}
                                 className="dark text-gray-500 mb-4"
                                 onSelect={e=>setIdOrg(e.target.value)}
                                 classNames={
@@ -201,7 +200,7 @@ export default function CreateSoutenance ({isOpen, onOpenChange, functionActuali
                             >
                                 {organismes.map((organisme)=>(
                                     <AutocompleteItem onClick={()=>{setIdOrg(organisme.idorg)}} value={organisme.idorg} description={organisme.lieu + ' - ' + organisme.design} className="text-gray-400" key={organisme.idorg}>
-                                        {organisme.idorg}
+                                        {organisme.idorg.toString()}
                                     </AutocompleteItem>
                                 ))}
                             </Autocomplete>
