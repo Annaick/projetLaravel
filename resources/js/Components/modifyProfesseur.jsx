@@ -24,7 +24,7 @@ export default function ModifProfesseur ({isOpen, onOpenChange, id, functionActu
 
     useEffect(()=>{
         fetchData()
-    }, [id])
+    }, [id, isOpen])
     
     const fetchData = async ()=>{
         try{

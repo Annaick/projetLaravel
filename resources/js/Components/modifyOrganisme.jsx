@@ -14,7 +14,7 @@ export default function ModifOrganisme ({isOpen, onOpenChange, id, functionActua
 
     useEffect(()=>{
         fetchData()
-    }, [id])
+    }, [id, isOpen])
     
     const fetchData = async ()=>{
         try{

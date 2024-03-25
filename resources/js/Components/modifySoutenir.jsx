@@ -79,7 +79,7 @@ export default function ModifSoutenir ({isOpen, onOpenChange, id, functionActual
         getEtudiants()
         getOrganismes()
         getProfesseurs()
-    }, [id])
+    }, [id, isOpen])
     
     const fetchData = async ()=>{
         try{

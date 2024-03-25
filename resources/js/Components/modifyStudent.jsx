@@ -20,7 +20,7 @@ export default function ModifStudent ({isOpen, onOpenChange, id, functionActuali
 
     useEffect(()=>{
         fetchData()
-    }, [id])
+    }, [id, isOpen])
     
     const fetchData = async ()=>{
         try{
