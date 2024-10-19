@@ -1,4 +1,7 @@
 
+![-Laravel-10-19-2024_04_20_PM](https://github.com/user-attachments/assets/2084088f-a09c-450a-9ef1-233876fe7999)
+![Profile-Laravel-10-19-2024_04_20_PM](https://github.com/user-attachments/assets/ac837358-fce2-449d-991d-ab420bd4514d)
+
 ## Projet PHP Num 2 (Yael et Annaick)
 
 ## Installer le projet en local
@@ -50,6 +53,7 @@ Il faudra vérifier que ces programmes sont bien installés:
 - Lancer le serveur WAMP
 - Lancer la commande ```npm run dev```
 - Lancer la commande ```php artisan serve```
+  
 
 
 Voilà, maintenant ouvrir le navigateur et aller à l'url: http://127.0.0.1:8000/
